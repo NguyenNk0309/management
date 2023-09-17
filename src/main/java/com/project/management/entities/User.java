@@ -1,9 +1,6 @@
 package com.project.management.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,8 +10,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
-@Builder
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
@@ -25,6 +22,14 @@ public class User implements UserDetails {
     private String username;
 
     private String password;
+
+    private String address;
+
+    private String phoneNumber;
+
+    private String email;
+
+    private String fullName;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(

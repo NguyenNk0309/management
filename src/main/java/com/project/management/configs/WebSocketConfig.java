@@ -1,4 +1,4 @@
-package com.project.management.ws;
+package com.project.management.configs;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

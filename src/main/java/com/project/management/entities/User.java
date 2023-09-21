@@ -12,13 +12,10 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements UserDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long pk;
-
+public class User extends BaseEntity implements UserDetails {
     private String username;
 
     private String password;
@@ -31,7 +28,7 @@ public class User implements UserDetails {
 
     private String fullName;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_fk", referencedColumnName = "pk"),

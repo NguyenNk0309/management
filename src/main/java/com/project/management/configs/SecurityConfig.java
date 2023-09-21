@@ -1,6 +1,5 @@
 package com.project.management.configs;
 
-import com.project.management.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

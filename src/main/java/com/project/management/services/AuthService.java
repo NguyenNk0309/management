@@ -39,7 +39,7 @@ public class AuthService {
 
     public void signUp(SignUpDTO signUpDTO) {
         if (userRepository.existsByUsername(signUpDTO.getUsername())) {
-            throw new MyException(HttpStatus.NOT_FOUND, "User already exist");
+            throw new MyException(HttpStatus.NOT_FOUND, "Username Already Exist");
         }
 
         User user = User.builder()
@@ -59,10 +59,16 @@ public class AuthService {
     }
 
     public String signIn(SignInDTO signInDTO) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        signInDTO.getUsername(),
-                        signInDTO.getPassword()));
+        Authentication authentication;
+        try {
+             authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            signInDTO.getUsername(),
+                            signInDTO.getPassword()));
+
+        } catch (Exception e) {
+            throw new MyException(HttpStatus.UNAUTHORIZED, "Username Or Password Is Incorrect");
+        }
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return jwtGenerator.generateToken(authentication);
     }

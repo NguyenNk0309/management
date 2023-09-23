@@ -39,7 +39,7 @@ public class AuthService {
 
     public void signUp(SignUpDTO signUpDTO) {
         if (userRepository.existsByUsername(signUpDTO.getUsername())) {
-            throw new MyException(HttpStatus.NOT_FOUND, "Username Already Exist");
+            throw new MyException(HttpStatus.CONFLICT, "Username Already Exist");
         }
 
         User user = User.builder()
@@ -52,7 +52,7 @@ public class AuthService {
                 .build();
 
         Role roles = roleRepository.findByName(RoleEnum.USER.desc)
-                .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, "Role not found"));
+                .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, "Role Not Found"));
         user.setRoles(Collections.singletonList(roles));
 
         userRepository.save(user);

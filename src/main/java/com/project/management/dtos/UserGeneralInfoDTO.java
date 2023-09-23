@@ -1,16 +1,14 @@
 package com.project.management.dtos;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@Builder
-public class SignUpDTO {
-    private String username;
+@SuperBuilder
+public class UserGeneralInfoDTO {
 
-    private String password;
+    private String username;
 
     private String address;
 
@@ -19,4 +17,6 @@ public class SignUpDTO {
     private String email;
 
     private String fullName;
+
+    private String role;
 }

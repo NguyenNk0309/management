@@ -1,20 +1,18 @@
 package com.project.management.dtos;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+import java.util.Date;
 
 @Getter
 @Setter
-@Builder
-public class UserInfoDTO {
-    private String username;
+@SuperBuilder
+public class UserInfoDTO extends UserGeneralInfoDTO {
 
-    private String address;
+    private Long pk;
 
-    private String phoneNumber;
+    private Date createdOn;
 
-    private String email;
-
-    private String fullName;
+    private Date updatedOn;
 }

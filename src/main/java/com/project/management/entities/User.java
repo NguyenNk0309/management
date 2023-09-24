@@ -34,7 +34,12 @@ public class User extends BaseEntity implements UserDetails {
             joinColumns = @JoinColumn(name = "user_fk", referencedColumnName = "pk"),
             inverseJoinColumns = @JoinColumn(name = "role_fk", referencedColumnName = "pk")
     )
-    private List<Role> roles = new ArrayList<>();
+    private List<Role> roles;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<Room>  rooms;
+
+//  -------------------------------------------------
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

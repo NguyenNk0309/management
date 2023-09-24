@@ -1,9 +1,11 @@
 package com.project.management.configs;
 
 import com.project.management.entities.Role;
+import com.project.management.entities.Room;
 import com.project.management.entities.User;
 import com.project.management.enums.RoleEnum;
 import com.project.management.repositories.RoleRepository;
+import com.project.management.repositories.RoomRepository;
 import com.project.management.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -12,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+import java.util.UUID;
 
 @Component
 public class PopulateData implements ApplicationRunner {
@@ -20,6 +23,9 @@ public class PopulateData implements ApplicationRunner {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -42,5 +48,15 @@ public class PopulateData implements ApplicationRunner {
                 .fullName("Nguyen Khoi Nguyen")
                 .roles(Collections.singletonList(adminRole))
                 .build());
+
+//        Room
+        User user = userRepository.findById(1L).get();
+
+        roomRepository.save(Room.builder()
+                .name("Room 1")
+                .uuid(UUID.randomUUID().toString())
+                .user(user)
+                .build());
     }
+
 }

@@ -14,6 +14,6 @@ import java.util.List;
 public class Role extends BaseEntity {
     private String name;
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private List<User> users;
 }

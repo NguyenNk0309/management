@@ -36,8 +36,8 @@ public class User extends BaseEntity implements UserDetails {
     )
     private List<Role> roles;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<Room>  rooms;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Room>  rooms;
 
 //  -------------------------------------------------
 

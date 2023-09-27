@@ -52,11 +52,7 @@ public class PopulateData implements ApplicationRunner {
 //        Room
         User user = userRepository.findById(1L).get();
 
-        roomRepository.save(Room.builder()
-                .name("Room 1")
-                .uuid(UUID.randomUUID().toString())
-                .user(user)
-                .build());
+        roomRepository.save(new Room("room 1", user));
     }
 
 }

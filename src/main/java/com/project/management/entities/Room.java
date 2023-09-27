@@ -3,6 +3,8 @@ package com.project.management.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -15,7 +17,16 @@ public class Room extends BaseEntity {
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    private List<Sensor> sensors;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_fk")
     private User user;
+
+    public Room(String name, User user) {
+        this.name = name;
+        this.user = user;
+        this.uuid = UUID.randomUUID().toString();
+    }
 }

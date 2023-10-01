@@ -16,4 +16,5 @@ public class RoomInfoDTO {
     Date createdOn;
     Date updatedOn;
     UserInfoDTO user;
+    Boolean isUsed;
 }

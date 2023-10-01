@@ -18,6 +18,8 @@ public class Room extends BaseEntity {
 
     private String name;
 
+    private Boolean isUsed;
+
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Hardware> hardwares;
@@ -30,5 +32,6 @@ public class Room extends BaseEntity {
         this.name = name;
         this.user = user;
         this.token = UUID.randomUUID().toString();
+        this.isUsed = false;
     }
 }

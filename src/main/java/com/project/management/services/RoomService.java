@@ -43,6 +43,7 @@ public class RoomService {
                         .pk(room.getPk())
                         .token(room.getToken())
                         .name(room.getName())
+                        .isUsed(room.getIsUsed())
                         .user(UserInfoDTO
                                 .builder()
                                 .pk(room.getUser().getPk())

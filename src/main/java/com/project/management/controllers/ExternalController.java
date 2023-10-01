@@ -12,6 +12,19 @@ public class ExternalController {
     @Autowired
     ExternalService externalService;
 
+    @GetMapping("connect")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDTO connectHardware(@RequestParam(name = "token") String token) {
+        externalService.connectHardware(token);
+
+        return ResponseDTO
+                .builder()
+                .message("Success")
+                .status(HttpStatus.OK.value())
+                .data(null)
+                .build();
+    }
+
     @GetMapping("update")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDTO updateHardwareValue(

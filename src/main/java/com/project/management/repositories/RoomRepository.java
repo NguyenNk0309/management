@@ -11,4 +11,6 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     Boolean existsByName(String roomName);
 
     Optional<Room> findByToken(String uuid);
+
+    Boolean existsByToken(String token);
 }

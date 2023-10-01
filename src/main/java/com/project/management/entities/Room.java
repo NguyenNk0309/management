@@ -18,7 +18,7 @@ public class Room extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
-    private List<Sensor> sensors;
+    private List<Hardware> hardwares;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_fk")

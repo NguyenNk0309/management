@@ -24,4 +24,14 @@ public class RoomController {
                 .build();
     }
 
+    @GetMapping("all")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDTO getAllRooms() {
+        return ResponseDTO.builder()
+                .message("Success")
+                .status(HttpStatus.OK.value())
+                .data(roomService.getAllRooms())
+                .build();
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.project.management.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,11 +14,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Room extends BaseEntity {
-    private String uuid;
+    private String token;
 
     private String name;
 
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Hardware> hardwares;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,6 +29,6 @@ public class Room extends BaseEntity {
     public Room(String name, User user) {
         this.name = name;
         this.user = user;
-        this.uuid = UUID.randomUUID().toString();
+        this.token = UUID.randomUUID().toString();
     }
 }

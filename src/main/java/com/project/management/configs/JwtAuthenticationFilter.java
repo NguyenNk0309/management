@@ -29,6 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String servletPath = request.getServletPath();
         return new AntPathMatcher().match("/external/api/**", servletPath) ||
+                new AntPathMatcher().match("/ws/**", servletPath) ||
                 new AntPathMatcher().match("/auth/**", servletPath);
     }
 

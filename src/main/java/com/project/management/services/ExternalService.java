@@ -1,5 +1,6 @@
 package com.project.management.services;
 
+import com.project.management.dtos.HardwareInfoDTO;
 import com.project.management.entities.Hardware;
 import com.project.management.entities.Room;
 import com.project.management.exception.MyException;
@@ -7,7 +8,10 @@ import com.project.management.repositories.HardwareRepository;
 import com.project.management.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class ExternalService {
@@ -16,6 +20,9 @@ public class ExternalService {
 
     @Autowired
     HardwareRepository hardwareRepository;
+
+    @Autowired
+    SimpMessagingTemplate simpMessagingTemplate;
 
     public void connectHardware(String token) {
         Room room = roomRepository.findByToken(token)
@@ -61,6 +68,22 @@ public class ExternalService {
                 .reservedSwitch(reservedSwitch)
                 .room(room)
                 .build();
+        simpMessagingTemplate
+                .convertAndSend(String.format("/ws/topic/%s", room.getToken()),
+                        HardwareInfoDTO
+                                .builder()
+                                .gasSensorValue(gasSensorValue)
+                                .flameSensorValue(flameSensorValue)
+                                .pressureSensorValue(pressureSensorValue)
+                                .motionSensorValue(motionSensorValue)
+                                .temperatureSensorValue(temperatureSensorValue)
+                                .humiditySensorValue(humiditySensorValue)
+                                .secondMotionSensorValue(secondMotionSensorValue)
+                                .acSwitch(acSwitch)
+                                .acPumpSwitch(acPumpSwitch)
+                                .reservedSwitch(reservedSwitch)
+                                .updatedOn(new Date())
+                                .build());
         room.getHardwares().add(hardware);
         room.setHardwares(room.getHardwares());
         roomRepository.save(room);

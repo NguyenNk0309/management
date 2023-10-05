@@ -33,10 +33,10 @@ public class Hardware extends BaseEntity {
 
     private Float secondMotionSensorValue;
 
-    private Boolean acSwitch;
-
-    private Boolean acPumpSwitch;
-
-    private Boolean reservedSwitch;
+//    private Boolean acSwitch;
+//
+//    private Boolean acPumpSwitch;
+//
+//    private Boolean reservedSwitch;
     
 }

@@ -1,5 +1,6 @@
 package com.project.management.controllers;
 
+import com.project.management.configs.JwtGenerator;
 import com.project.management.dtos.ResponseDTO;
 import com.project.management.dtos.SignInDTO;
 import com.project.management.dtos.SignUpDTO;
@@ -8,13 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-
 @RestController
 @RequestMapping("auth")
 public class AuthController {
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    JwtGenerator jwtGenerator;
 
     @PostMapping("sign-up")
     @ResponseStatus(HttpStatus.OK)
@@ -36,6 +38,16 @@ public class AuthController {
                 .status(HttpStatus.OK.value())
                 .message("Success")
                 .data(token)
+                .build();
+    }
+
+    @PostMapping("validate-token")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDTO validateToken(@RequestBody String token){
+        return ResponseDTO.builder()
+                .status(HttpStatus.OK.value())
+                .message("Success")
+                .data(jwtGenerator.validateToken(token))
                 .build();
     }
 }

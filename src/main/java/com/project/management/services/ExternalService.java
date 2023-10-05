@@ -63,9 +63,9 @@ public class ExternalService {
                 .temperatureSensorValue(temperatureSensorValue)
                 .humiditySensorValue(humiditySensorValue)
                 .secondMotionSensorValue(secondMotionSensorValue)
-                .acSwitch(acSwitch)
-                .acPumpSwitch(acPumpSwitch)
-                .reservedSwitch(reservedSwitch)
+//                .acSwitch(acSwitch)
+//                .acPumpSwitch(acPumpSwitch)
+//                .reservedSwitch(reservedSwitch)
                 .room(room)
                 .build();
         simpMessagingTemplate

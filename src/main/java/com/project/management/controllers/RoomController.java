@@ -34,4 +34,14 @@ public class RoomController {
                 .build();
     }
 
+    @PostMapping("of-user/{pk}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDTO getRoomsByUserPk(@PathVariable Long pk) {
+        return ResponseDTO.builder()
+                .message("Success")
+                .status(HttpStatus.OK.value())
+                .data(roomService.getRoomsByUserPk(pk))
+                .build();
+    }
+
 }

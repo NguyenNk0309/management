@@ -62,4 +62,22 @@ public class RoomService {
                 .collect(Collectors.toList());
     }
 
+    public List<RoomInfoDTO> getRoomsByUserPk(Long userPk) {
+        User user = userRepository.findById(userPk)
+                .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("User With Pk = %d Not Found", userPk)));
+        List<Room> rooms = roomRepository.findAllByUser(user);
+        return rooms.stream().map(room ->
+                        RoomInfoDTO
+                                .builder()
+                                .pk(room.getPk())
+                                .token(room.getToken())
+                                .name(room.getName())
+                                .isUsed(room.getIsUsed())
+                                .createdOn(room.getCreateOn())
+                                .updatedOn(room.getUpdatedOn())
+                                .build())
+                .collect(Collectors.toList());
+
+    }
+
 }

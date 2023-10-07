@@ -51,9 +51,12 @@ public class PopulateData implements ApplicationRunner {
 
 //        Room
         User user = userRepository.findById(1L).get();
-        Room room = new Room("room 1", user);
-        room.setIsUsed(true);
-        roomRepository.save(room);
+        Room room1 = new Room("Room 1", user);
+        room1.setIsUsed(true);
+        roomRepository.save(room1);
+        Room room2 = new Room("Room 2", user);
+        room2.setIsUsed(true);
+        roomRepository.save(room2);
     }
 
 }

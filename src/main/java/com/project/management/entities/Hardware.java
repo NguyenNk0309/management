@@ -1,11 +1,9 @@
 package com.project.management.entities;
 
 import lombok.*;
+import org.hibernate.envers.Audited;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -13,9 +11,10 @@ import javax.persistence.ManyToOne;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Audited
 public class Hardware extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_fk")
     private Room room;
 
@@ -33,10 +32,10 @@ public class Hardware extends BaseEntity {
 
     private Float secondMotionSensorValue;
 
-//    private Boolean acSwitch;
-//
-//    private Boolean acPumpSwitch;
-//
-//    private Boolean reservedSwitch;
+    private Boolean acSwitch;
+
+    private Boolean acPumpSwitch;
+
+    private Boolean reservedSwitch;
     
 }

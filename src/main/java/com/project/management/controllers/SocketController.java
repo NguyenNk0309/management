@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class SocketController {
 
-    @MessageMapping("/hardware/button/{token}")
-    @SendTo("/ws/topic/hardware/button/{token}")
+    @MessageMapping("/hardware/switch/{token}")
+    @SendTo("/ws/topic/hardware/switch/{token}")
     public String sendMessage(@DestinationVariable String token, String json) {
         System.out.println(json);
         return token;

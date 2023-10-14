@@ -1,11 +1,12 @@
 package com.project.management.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
+import static utils.ManagerUtil.generateRandomToken;
 
 @Entity
 @Getter
@@ -13,16 +14,18 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Audited
 public class Room extends BaseEntity {
-    private String token;
+    private String registerToken;
+
+    private String apiToken;
 
     private String name;
 
     private Boolean isUsed;
 
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Hardware> hardwares;
+    @OneToOne(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Hardware hardware;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_fk")
@@ -31,7 +34,8 @@ public class Room extends BaseEntity {
     public Room(String name, User user) {
         this.name = name;
         this.user = user;
-        this.token = UUID.randomUUID().toString();
+        this.registerToken = UUID.randomUUID().toString();
+        this.apiToken = generateRandomToken(5);
         this.isUsed = false;
     }
 }

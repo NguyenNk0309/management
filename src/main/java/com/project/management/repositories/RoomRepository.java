@@ -12,9 +12,9 @@ import java.util.Optional;
 public interface RoomRepository extends JpaRepository<Room, Long> {
     Boolean existsByName(String roomName);
 
-    Optional<Room> findByToken(String uuid);
+    Optional<Room> findByApiToken(String token);
 
-    Boolean existsByToken(String token);
+    Optional<Room> findByRegisterToken(String token);
 
     List<Room> findAllByUser(User user);
 }

@@ -32,7 +32,7 @@ public class RoomService {
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("User With Pk = %d Not Found", userPk)));
 
         Room room = roomRepository.save(new Room(roomName, user));
-        return room.getToken();
+        return room.getRegisterToken();
     }
 
     public List<RoomInfoDTO> getAllRooms() {
@@ -41,7 +41,7 @@ public class RoomService {
                 RoomInfoDTO
                         .builder()
                         .pk(room.getPk())
-                        .token(room.getToken())
+                        .token(room.getApiToken())
                         .name(room.getName())
                         .isUsed(room.getIsUsed())
                         .user(UserInfoDTO
@@ -70,7 +70,7 @@ public class RoomService {
                         RoomInfoDTO
                                 .builder()
                                 .pk(room.getPk())
-                                .token(room.getToken())
+                                .token(room.getApiToken())
                                 .name(room.getName())
                                 .isUsed(room.getIsUsed())
                                 .createdOn(room.getCreateOn())

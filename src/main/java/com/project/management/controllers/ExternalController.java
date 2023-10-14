@@ -15,13 +15,24 @@ public class ExternalController {
     @GetMapping("connect")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDTO connectHardware(@RequestParam(name = "token") String token) {
-        externalService.connectHardware(token);
 
         return ResponseDTO
                 .builder()
                 .message("Success")
                 .status(HttpStatus.OK.value())
-                .data(null)
+                .data(externalService.connectHardware(token))
+                .build();
+    }
+
+    @GetMapping("master-request")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDTO getRequest(@RequestParam(name = "token") String token) {
+
+        return ResponseDTO
+                .builder()
+                .message("Success")
+                .status(HttpStatus.OK.value())
+                .data(externalService.getRequest(token))
                 .build();
     }
 

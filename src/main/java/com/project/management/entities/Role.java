@@ -1,6 +1,7 @@
 package com.project.management.entities;
 
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Audited
 public class Role extends BaseEntity {
     private String name;
 

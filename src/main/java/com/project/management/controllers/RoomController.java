@@ -1,5 +1,6 @@
 package com.project.management.controllers;
 
+import com.project.management.dtos.HardwareRequestDTO;
 import com.project.management.dtos.ResponseDTO;
 import com.project.management.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +35,24 @@ public class RoomController {
                 .build();
     }
 
-    @PostMapping("of-user/{pk}")
+    @GetMapping("of-user/{pk}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDTO getRoomsByUserPk(@PathVariable Long pk) {
         return ResponseDTO.builder()
                 .message("Success")
                 .status(HttpStatus.OK.value())
                 .data(roomService.getRoomsByUserPk(pk))
+                .build();
+    }
+
+    @PutMapping("updateHardware/{pk}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDTO updateHardware(@PathVariable Long pk, @RequestBody HardwareRequestDTO requestDTO) {
+        roomService.updateHardware(pk, requestDTO);
+        return ResponseDTO.builder()
+                .message("Success")
+                .status(HttpStatus.OK.value())
+                .data(null)
                 .build();
     }
 

@@ -1,7 +1,9 @@
 package com.project.management.services;
 
+import com.project.management.dtos.HardwareRequestDTO;
 import com.project.management.dtos.RoomInfoDTO;
 import com.project.management.dtos.UserInfoDTO;
+import com.project.management.entities.Hardware;
 import com.project.management.entities.Room;
 import com.project.management.entities.User;
 import com.project.management.exception.MyException;
@@ -12,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -78,6 +81,21 @@ public class RoomService {
                                 .build())
                 .collect(Collectors.toList());
 
+    }
+
+    public void updateHardware(Long pk, HardwareRequestDTO requestDTO) {
+       Room room = roomRepository.findById(pk)
+               .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));
+
+        Hardware hardware = room.getHardware();
+        if (Objects.isNull(hardware)) {
+            throw new MyException(HttpStatus.NOT_FOUND, "This Room Hasn't Connect To Hardware Yet");
+        }
+        hardware.setReservedSwitch(requestDTO.getReservedSwitch());
+        hardware.setAcSwitch(requestDTO.getAcSwitch());
+        hardware.setAcPumpSwitch(requestDTO.getAcPumpSwitch());
+
+        roomRepository.save(room);
     }
 
 }

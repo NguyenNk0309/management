@@ -94,6 +94,8 @@ public class RoomService {
         hardware.setReservedSwitch(requestDTO.getReservedSwitch());
         hardware.setAcSwitch(requestDTO.getAcSwitch());
         hardware.setAcPumpSwitch(requestDTO.getAcPumpSwitch());
+        hardware.setIsReboot(requestDTO.getIsReboot());
+        hardware.setIsShutdown(requestDTO.getIsShutdown());
 
         roomRepository.save(room);
     }

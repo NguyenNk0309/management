@@ -1,9 +1,11 @@
 package com.project.management.configs;
 
+import com.project.management.entities.Hardware;
 import com.project.management.entities.Role;
 import com.project.management.entities.Room;
 import com.project.management.entities.User;
 import com.project.management.enums.RoleEnum;
+import com.project.management.repositories.HardwareRepository;
 import com.project.management.repositories.RoleRepository;
 import com.project.management.repositories.RoomRepository;
 import com.project.management.repositories.UserRepository;
@@ -14,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -29,6 +32,9 @@ public class PopulateData implements ApplicationRunner {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private HardwareRepository hardwareRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -57,6 +63,11 @@ public class PopulateData implements ApplicationRunner {
         Room room2 = new Room("Room 2", user);
         room2.setIsUsed(true);
         roomRepository.save(room2);
+
+//        Hardware
+        Hardware hardware1 = Hardware.builder().room(room1).build();
+        Hardware hardware2 = Hardware.builder().room(room2).build();
+        hardwareRepository.saveAll(List.of(hardware1, hardware2));
     }
 
 }

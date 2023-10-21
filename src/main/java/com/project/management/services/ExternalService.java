@@ -119,8 +119,8 @@ public class ExternalService {
                 .acPumpSwitch(room.getHardware().getAcPumpSwitch())
                 .acSwitch(room.getHardware().getAcSwitch())
                 .reservedSwitch(room.getHardware().getReservedSwitch())
-                .isShutdown(false) // TODO
-                .isReboot(false)
+                .isShutdown(room.getHardware().getIsShutdown())
+                .isReboot(room.getHardware().getIsReboot())
                 .build();
     }
 }

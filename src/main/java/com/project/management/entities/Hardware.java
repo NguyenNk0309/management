@@ -37,5 +37,9 @@ public class Hardware extends BaseEntity {
     private Boolean acPumpSwitch;
 
     private Boolean reservedSwitch;
-    
+
+    private Boolean isShutdown;
+
+    private Boolean isReboot;
+
 }

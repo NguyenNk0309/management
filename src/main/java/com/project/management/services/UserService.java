@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,6 +29,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -100,14 +105,26 @@ public class UserService implements UserDetailsService {
         user.setEmail(Objects.nonNull(requestDTO.getEmail()) ? requestDTO.getEmail() : user.getEmail());
         user.setAddress(Objects.nonNull(requestDTO.getAddress()) ? requestDTO.getAddress() : user.getAddress());
         user.setUsername(Objects.nonNull(requestDTO.getUsername()) ? requestDTO.getUsername() : user.getUsername());
-        user.setPassword(Objects.nonNull(requestDTO.getPassword()) ? requestDTO.getPassword() : user.getPassword());
         user.setFullName(Objects.nonNull(requestDTO.getFullName()) ? requestDTO.getFullName() : user.getFullName());
         user.setPhoneNumber(Objects.nonNull(requestDTO.getPhoneNumber()) ? requestDTO.getPhoneNumber() : user.getPhoneNumber());
 
-        Role roles = roleRepository.findByName(requestDTO.getRole())
-                .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, "Role Not Found"));
+        if (Objects.nonNull(requestDTO.getRole())) {
+            Role roles = roleRepository.findByName(requestDTO.getRole())
+                    .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, "Role Not Found"));
+            user.setRoles(Collections.singletonList(roles));
+        }
 
-        user.setRoles(Objects.nonNull(requestDTO.getRole()) ? Collections.singletonList(roles) : Collections.singletonList(user.getRoles().get(0)));
+        if (StringUtils.hasText(requestDTO.getCurrentPassword())) {
+            if (!StringUtils.hasText(requestDTO.getNewPassword())) {
+                throw new MyException(HttpStatus.BAD_REQUEST, "New Password Mustn't Be Empty");
+            }
+
+            if (passwordEncoder.matches(requestDTO.getCurrentPassword(), user.getPassword())) {
+                user.setPassword(passwordEncoder.encode(requestDTO.getNewPassword()));
+            } else {
+                throw new MyException(HttpStatus.BAD_REQUEST, "Password Is Incorrect");
+            }
+        }
 
         userRepository.save(user);
     }

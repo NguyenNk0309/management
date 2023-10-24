@@ -6,8 +6,12 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UpdateUserRequestDTO extends UserGeneralInfoDTO {
 
-    private String password;
+    private String currentPassword;
+
+    private String newPassword;
 
 }

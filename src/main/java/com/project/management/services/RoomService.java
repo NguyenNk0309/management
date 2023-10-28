@@ -1,12 +1,14 @@
 package com.project.management.services;
 
 import com.project.management.dtos.HardwareRequestDTO;
+import com.project.management.dtos.HardwareUpdateHistoriesDTO;
 import com.project.management.dtos.RoomInfoDTO;
 import com.project.management.dtos.UserInfoDTO;
 import com.project.management.entities.Hardware;
 import com.project.management.entities.Room;
 import com.project.management.entities.User;
 import com.project.management.exception.MyException;
+import com.project.management.repositories.HardwareRepository;
 import com.project.management.repositories.RoomRepository;
 import com.project.management.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class RoomService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    HardwareRepository hardwareRepository;
 
     public String createNewRoom(String roomName, Long userPk) {
         Boolean isRoomNameExist = roomRepository.existsByName(roomName);
@@ -80,6 +85,16 @@ public class RoomService {
                                 .updatedOn(room.getUpdatedOn())
                                 .build())
                 .collect(Collectors.toList());
+
+    }
+
+    public List<HardwareUpdateHistoriesDTO> getHardwareHistoriesByRoomPk(Long roomPk, Long week) {
+        if (Objects.isNull(week)) {
+            week = 0L;
+        }
+
+        List<HardwareUpdateHistoriesDTO> historiesDTOS = hardwareRepository.getHardwareUpdateHistoriesByRoomPk(roomPk, week);
+        return historiesDTOS;
 
     }
 

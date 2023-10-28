@@ -56,4 +56,15 @@ public class RoomController {
                 .build();
     }
 
+    @GetMapping("{pk}/hardware-histories-of-week")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDTO getHardwareHistoriesByRoomPk(@PathVariable Long pk,
+                                                    @RequestParam(name = "week")Long week) {
+        return ResponseDTO.builder()
+                .message("Success")
+                .status(HttpStatus.OK.value())
+                .data(roomService.getHardwareHistoriesByRoomPk(pk, week))
+                .build();
+    }
+
 }

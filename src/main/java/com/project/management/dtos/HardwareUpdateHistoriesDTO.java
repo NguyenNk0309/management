@@ -9,13 +9,14 @@ public interface HardwareUpdateHistoriesDTO {
 
     Float getPressureSensorValue();
 
-    Float getMotionSensorValue();
+    Float getAmpSensorValue();
 
     Float getTemperatureSensorValue();
 
     Float getHumiditySensorValue();
 
-    Float getSecondMotionSensorValue();
+    Float getSecondAmpSensorValue();
+
     Long getDateOfWeek();
 
 }

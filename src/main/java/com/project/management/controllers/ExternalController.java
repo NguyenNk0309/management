@@ -12,7 +12,7 @@ public class ExternalController {
     @Autowired
     ExternalService externalService;
 
-    @GetMapping("connect")
+    @PostMapping("connect")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDTO connectHardware(@RequestParam(name = "token") String token) {
 
@@ -43,10 +43,10 @@ public class ExternalController {
             @RequestParam(name = "V0", required = false) Integer gasSensorValue,
             @RequestParam(name = "V1", required = false) Integer flameSensorValue,
             @RequestParam(name = "V2", required = false) Float pressureSensorValue,
-            @RequestParam(name = "V3", required = false) Float motionSensorValue,
+            @RequestParam(name = "V3", required = false) Float ampSensorValue,
             @RequestParam(name = "V4", required = false) Float temperatureSensorValue,
             @RequestParam(name = "V5", required = false) Float humiditySensorValue,
-            @RequestParam(name = "V6", required = false) Float secondMotionSensorValue,
+            @RequestParam(name = "V6", required = false) Float secondAmpSensorValue,
             @RequestParam(name = "V7", required = false) Boolean acSwitch,
             @RequestParam(name = "V8", required = false) Boolean acPumpSwitch,
             @RequestParam(name = "V9", required = false) Boolean reservedSwitch
@@ -56,10 +56,10 @@ public class ExternalController {
                 gasSensorValue,
                 flameSensorValue,
                 pressureSensorValue,
-                motionSensorValue,
+                ampSensorValue,
                 temperatureSensorValue,
                 humiditySensorValue,
-                secondMotionSensorValue,
+                secondAmpSensorValue,
                 acSwitch,
                 acPumpSwitch,
                 reservedSwitch);

@@ -67,4 +67,18 @@ public class RoomController {
                 .build();
     }
 
+    @GetMapping("{pk}/power-water-consumption-histories")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDTO getPowerAndWaterConsumptionHistoriesByRoomPk(
+            @PathVariable Long pk,
+            @RequestParam(name = "timeType", required = true)String timeType,
+            @RequestParam(name = "timeFilter", required = true)String timeFilter
+    ) {
+        return ResponseDTO.builder()
+                .message("Success")
+                .status(HttpStatus.OK.value())
+                .data(roomService.getPowerAndWaterConsumptionHistoriesByRoomPk(pk, timeType, timeFilter))
+                .build();
+    }
+
 }

@@ -16,13 +16,13 @@ public class HardwareInfoDTO {
 
     private Float pressureSensorValue;
 
-    private Float motionSensorValue;
+    private Float ampSensorValue;
 
     private Float temperatureSensorValue;
 
     private Float humiditySensorValue;
 
-    private Float secondMotionSensorValue;
+    private Float secondAmpSensorValue;
 
     private Boolean acSwitch;
 

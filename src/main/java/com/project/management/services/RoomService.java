@@ -1,9 +1,6 @@
 package com.project.management.services;
 
-import com.project.management.dtos.HardwareRequestDTO;
-import com.project.management.dtos.HardwareUpdateHistoriesDTO;
-import com.project.management.dtos.RoomInfoDTO;
-import com.project.management.dtos.UserInfoDTO;
+import com.project.management.dtos.*;
 import com.project.management.entities.Hardware;
 import com.project.management.entities.Room;
 import com.project.management.entities.User;
@@ -15,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -94,6 +95,21 @@ public class RoomService {
         }
 
         List<HardwareUpdateHistoriesDTO> historiesDTOS = hardwareRepository.getHardwareUpdateHistoriesByRoomPk(roomPk, week);
+        return historiesDTOS;
+
+    }
+
+    public List<PowerAndWaterConsumptionHistoriesDTO> getPowerAndWaterConsumptionHistoriesByRoomPk(Long roomPk, String timeType, String timeFilter) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        List<PowerAndWaterConsumptionHistoriesDTO> historiesDTOS = new ArrayList<>();
+
+        try {
+            Date date = dateFormat.parse(timeFilter);
+            historiesDTOS = hardwareRepository
+                    .getPowerAndWaterConsumptionHistoriesByRoomPk(roomPk, timeType, date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return historiesDTOS;
 
     }

@@ -41,10 +41,10 @@ public class ExternalService {
                                     Integer gasSensorValue, 
                                     Integer flameSensorValue,
                                     Float pressureSensorValue,
-                                    Float motionSensorValue,
+                                    Float ampSensorValue,
                                     Float temperatureSensorValue,
                                     Float humiditySensorValue,
-                                    Float secondMotionSensorValue,
+                                    Float secondAmpSensorValue,
                                     Boolean acSwitch,
                                     Boolean acPumpSwitch,
                                     Boolean reservedSwitch) {
@@ -62,10 +62,10 @@ public class ExternalService {
                     .gasSensorValue(gasSensorValue)
                     .flameSensorValue(flameSensorValue)
                     .pressureSensorValue(pressureSensorValue)
-                    .motionSensorValue(motionSensorValue)
+                    .ampSensorValue(ampSensorValue)
                     .temperatureSensorValue(temperatureSensorValue)
                     .humiditySensorValue(humiditySensorValue)
-                    .secondMotionSensorValue(secondMotionSensorValue)
+                    .secondAmpSensorValue(secondAmpSensorValue)
                     .acSwitch(acSwitch)
                     .acPumpSwitch(acPumpSwitch)
                     .reservedSwitch(reservedSwitch)
@@ -76,10 +76,10 @@ public class ExternalService {
             room.getHardware().setGasSensorValue(gasSensorValue);
             room.getHardware().setFlameSensorValue(flameSensorValue);
             room.getHardware().setPressureSensorValue(pressureSensorValue);
-            room.getHardware().setMotionSensorValue(motionSensorValue);
+            room.getHardware().setAmpSensorValue(ampSensorValue);
             room.getHardware().setTemperatureSensorValue(temperatureSensorValue);
             room.getHardware().setHumiditySensorValue(humiditySensorValue);
-            room.getHardware().setSecondMotionSensorValue(secondMotionSensorValue);
+            room.getHardware().setSecondAmpSensorValue(secondAmpSensorValue);
             room.getHardware().setAcSwitch(acSwitch);
             room.getHardware().setAcPumpSwitch(acPumpSwitch);
             room.getHardware().setReservedSwitch(reservedSwitch);
@@ -92,10 +92,10 @@ public class ExternalService {
                                 .gasSensorValue(gasSensorValue)
                                 .flameSensorValue(flameSensorValue)
                                 .pressureSensorValue(pressureSensorValue)
-                                .motionSensorValue(motionSensorValue)
+                                .ampSensorValue(ampSensorValue)
                                 .temperatureSensorValue(temperatureSensorValue)
                                 .humiditySensorValue(humiditySensorValue)
-                                .secondMotionSensorValue(secondMotionSensorValue)
+                                .secondAmpSensorValue(secondAmpSensorValue)
                                 .acSwitch(acSwitch)
                                 .acPumpSwitch(acPumpSwitch)
                                 .reservedSwitch(reservedSwitch)

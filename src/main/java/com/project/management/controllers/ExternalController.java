@@ -1,5 +1,6 @@
 package com.project.management.controllers;
 
+import com.project.management.dtos.HardwareInfoDTO;
 import com.project.management.dtos.ResponseDTO;
 import com.project.management.services.ExternalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,33 +37,23 @@ public class ExternalController {
                 .build();
     }
 
-    @GetMapping("update")
+    @PostMapping("update")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDTO updateHardwareValue(
             @RequestParam(name = "token") String token,
-            @RequestParam(name = "V0", required = false) Integer gasSensorValue,
-            @RequestParam(name = "V1", required = false) Integer flameSensorValue,
-            @RequestParam(name = "V2", required = false) Float pressureSensorValue,
-            @RequestParam(name = "V3", required = false) Float ampSensorValue,
-            @RequestParam(name = "V4", required = false) Float temperatureSensorValue,
-            @RequestParam(name = "V5", required = false) Float humiditySensorValue,
-            @RequestParam(name = "V6", required = false) Float secondAmpSensorValue,
-            @RequestParam(name = "V7", required = false) Boolean acSwitch,
-            @RequestParam(name = "V8", required = false) Boolean acPumpSwitch,
-            @RequestParam(name = "V9", required = false) Boolean reservedSwitch
-    ) {
+            @RequestBody HardwareInfoDTO hardwareInfoDTO) {
         externalService.updateHardwareValue(
                 token,
-                gasSensorValue,
-                flameSensorValue,
-                pressureSensorValue,
-                ampSensorValue,
-                temperatureSensorValue,
-                humiditySensorValue,
-                secondAmpSensorValue,
-                acSwitch,
-                acPumpSwitch,
-                reservedSwitch);
+                hardwareInfoDTO.getGasSensorValue(),
+                hardwareInfoDTO.getFlameSensorValue(),
+                hardwareInfoDTO.getPressureSensorValue(),
+                hardwareInfoDTO.getAmpSensorValue(),
+                hardwareInfoDTO.getTemperatureSensorValue(),
+                hardwareInfoDTO.getHumiditySensorValue(),
+                hardwareInfoDTO.getSecondAmpSensorValue(),
+                hardwareInfoDTO.getAcSwitch(),
+                hardwareInfoDTO.getAcPumpSwitch(),
+                hardwareInfoDTO.getReservedSwitch());
         
         return ResponseDTO
                 .builder()

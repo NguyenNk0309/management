@@ -51,6 +51,8 @@ public class ExternalController {
                 hardwareInfoDTO.getTemperatureSensorValue(),
                 hardwareInfoDTO.getHumiditySensorValue(),
                 hardwareInfoDTO.getSecondAmpSensorValue(),
+                hardwareInfoDTO.getPowerConsumption(),
+                hardwareInfoDTO.getWaterConsumption(),
                 hardwareInfoDTO.getAcSwitch(),
                 hardwareInfoDTO.getAcPumpSwitch(),
                 hardwareInfoDTO.getReservedSwitch());

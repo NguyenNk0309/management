@@ -39,8 +39,8 @@ public interface HardwareRepository extends JpaRepository<Hardware, Long> {
             "WHEN :timeType = 'month' THEN DAYOFMONTH("+REV_TIME+") " +
             "WHEN :timeType = 'year' THEN MONTH("+REV_TIME+") " +
             "END AS time," +
-            "MAX(aud.gas_sensor_value) - MIN(aud.gas_sensor_value) AS powerConsumption, " + // TODO
-            "MAX(aud.gas_sensor_value) - MIN(aud.gas_sensor_value) AS waterConsumption " + // TODO
+            "MAX(aud.power_consumption) - MIN(aud.power_consumption) AS powerConsumption, " +
+            "MAX(aud.water_consumption) - MIN(aud.water_consumption) AS waterConsumption " +
             "FROM hardware_aud aud " +
             "JOIN room r ON aud.room_fk = r.pk " +
             "JOIN revinfo ri ON ri.rev = aud.rev " +

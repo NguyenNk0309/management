@@ -45,6 +45,8 @@ public class ExternalService {
                                     Float temperatureSensorValue,
                                     Float humiditySensorValue,
                                     Float secondAmpSensorValue,
+                                    Float powerConsumption,
+                                    Float waterConsumption,
                                     Boolean acSwitch,
                                     Boolean acPumpSwitch,
                                     Boolean reservedSwitch) {
@@ -66,6 +68,8 @@ public class ExternalService {
                     .temperatureSensorValue(temperatureSensorValue)
                     .humiditySensorValue(humiditySensorValue)
                     .secondAmpSensorValue(secondAmpSensorValue)
+                    .powerConsumption(powerConsumption)
+                    .waterConsumption(waterConsumption)
                     .acSwitch(acSwitch)
                     .acPumpSwitch(acPumpSwitch)
                     .reservedSwitch(reservedSwitch)
@@ -80,6 +84,8 @@ public class ExternalService {
             room.getHardware().setTemperatureSensorValue(temperatureSensorValue);
             room.getHardware().setHumiditySensorValue(humiditySensorValue);
             room.getHardware().setSecondAmpSensorValue(secondAmpSensorValue);
+            room.getHardware().setPowerConsumption(powerConsumption);
+            room.getHardware().setWaterConsumption(waterConsumption);
             room.getHardware().setAcSwitch(acSwitch);
             room.getHardware().setAcPumpSwitch(acPumpSwitch);
             room.getHardware().setReservedSwitch(reservedSwitch);

@@ -32,6 +32,10 @@ public class Hardware extends BaseEntity {
 
     private Float secondAmpSensorValue;
 
+    private Float powerConsumption;
+
+    private Float waterConsumption;
+
     private Boolean acSwitch;
 
     private Boolean acPumpSwitch;

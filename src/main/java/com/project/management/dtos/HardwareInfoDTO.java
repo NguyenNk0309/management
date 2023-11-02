@@ -30,5 +30,9 @@ public class HardwareInfoDTO {
 
     private Boolean reservedSwitch;
 
+    private Float powerConsumption;
+
+    private Float waterConsumption;
+
     private Date updatedOn;
 }

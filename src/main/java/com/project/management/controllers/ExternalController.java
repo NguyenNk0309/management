@@ -1,6 +1,6 @@
 package com.project.management.controllers;
 
-import com.project.management.dtos.HardwareInfoDTO;
+import com.project.management.dtos.HardwareUpdateDTO;
 import com.project.management.dtos.ResponseDTO;
 import com.project.management.services.ExternalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,21 +41,21 @@ public class ExternalController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseDTO updateHardwareValue(
             @RequestParam(name = "token") String token,
-            @RequestBody HardwareInfoDTO hardwareInfoDTO) {
+            @RequestBody HardwareUpdateDTO hardwareInfoDTO) {
         externalService.updateHardwareValue(
                 token,
-                hardwareInfoDTO.getGasSensorValue(),
-                hardwareInfoDTO.getFlameSensorValue(),
-                hardwareInfoDTO.getPressureSensorValue(),
-                hardwareInfoDTO.getAmpSensorValue(),
-                hardwareInfoDTO.getTemperatureSensorValue(),
-                hardwareInfoDTO.getHumiditySensorValue(),
-                hardwareInfoDTO.getSecondAmpSensorValue(),
-                hardwareInfoDTO.getPowerConsumption(),
-                hardwareInfoDTO.getWaterConsumption(),
-                hardwareInfoDTO.getAcSwitch(),
-                hardwareInfoDTO.getAcPumpSwitch(),
-                hardwareInfoDTO.getReservedSwitch());
+                hardwareInfoDTO.getV1(),
+                hardwareInfoDTO.getV2(),
+                hardwareInfoDTO.getV3(),
+                hardwareInfoDTO.getV4(),
+                hardwareInfoDTO.getV5(),
+                hardwareInfoDTO.getV6(),
+                hardwareInfoDTO.getV7(),
+                hardwareInfoDTO.getV8(),
+                hardwareInfoDTO.getV9(),
+                hardwareInfoDTO.getV10(),
+                hardwareInfoDTO.getV11(),
+                hardwareInfoDTO.getV12());
         
         return ResponseDTO
                 .builder()

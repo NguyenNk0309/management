@@ -44,6 +44,7 @@ public class ExternalController {
             @RequestBody HardwareUpdateDTO hardwareInfoDTO) {
         externalService.updateHardwareValue(
                 token,
+                hardwareInfoDTO.getV0(),
                 hardwareInfoDTO.getV1(),
                 hardwareInfoDTO.getV2(),
                 hardwareInfoDTO.getV3(),
@@ -54,8 +55,7 @@ public class ExternalController {
                 hardwareInfoDTO.getV8(),
                 hardwareInfoDTO.getV9(),
                 hardwareInfoDTO.getV10(),
-                hardwareInfoDTO.getV11(),
-                hardwareInfoDTO.getV12());
+                hardwareInfoDTO.getV11());
         
         return ResponseDTO
                 .builder()

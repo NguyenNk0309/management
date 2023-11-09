@@ -48,8 +48,7 @@ public class ExternalService {
                                     Float powerConsumption,
                                     Float waterConsumption,
                                     Boolean acSwitch,
-                                    Boolean acPumpSwitch,
-                                    Boolean reservedSwitch) {
+                                    Boolean acPumpSwitch) {
         Room room = roomRepository.findByApiToken(token)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Token '%s' Not Found", token)));
 
@@ -72,7 +71,6 @@ public class ExternalService {
                     .waterConsumption(waterConsumption)
                     .acSwitch(acSwitch)
                     .acPumpSwitch(acPumpSwitch)
-                    .reservedSwitch(reservedSwitch)
                     .room(room)
                     .build();
             room.setHardware(hardware);
@@ -88,7 +86,6 @@ public class ExternalService {
             room.getHardware().setWaterConsumption(waterConsumption);
             room.getHardware().setAcSwitch(acSwitch);
             room.getHardware().setAcPumpSwitch(acPumpSwitch);
-            room.getHardware().setReservedSwitch(reservedSwitch);
         }
 
         simpMessagingTemplate
@@ -104,7 +101,6 @@ public class ExternalService {
                                 .secondAmpSensorValue(secondAmpSensorValue)
                                 .acSwitch(acSwitch)
                                 .acPumpSwitch(acPumpSwitch)
-                                .reservedSwitch(reservedSwitch)
                                 .updatedOn(new Date())
                                 .build());
 
@@ -124,7 +120,6 @@ public class ExternalService {
                 .builder()
                 .acPumpSwitch(room.getHardware().getAcPumpSwitch())
                 .acSwitch(room.getHardware().getAcSwitch())
-                .reservedSwitch(room.getHardware().getReservedSwitch())
                 .isShutdown(room.getHardware().getIsShutdown())
                 .isReboot(room.getHardware().getIsReboot())
                 .build();

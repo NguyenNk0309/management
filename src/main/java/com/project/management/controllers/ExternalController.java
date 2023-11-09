@@ -41,21 +41,31 @@ public class ExternalController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseDTO updateHardwareValue(
             @RequestParam(name = "token") String token,
-            @RequestBody HardwareUpdateDTO hardwareInfoDTO) {
+            @RequestParam(name = "V0") Integer gasSensorValue,
+            @RequestParam(name = "V1") Integer flameSensorValue,
+            @RequestParam(name = "V2") Float pressureSensorValue,
+            @RequestParam(name = "V3") Float ampSensorValue,
+            @RequestParam(name = "V4") Float temperatureSensorValue,
+            @RequestParam(name = "V5") Float humiditySensorValue,
+            @RequestParam(name = "V6") Float secondAmpSensorValue,
+            @RequestParam(name = "V7") Float powerConsumption,
+            @RequestParam(name = "V8") Float waterConsumption,
+            @RequestParam(name = "V9") Boolean acSwitch,
+            @RequestParam(name = "V10") Boolean acPumpSwitch
+            ) {
         externalService.updateHardwareValue(
                 token,
-                hardwareInfoDTO.getV0(),
-                hardwareInfoDTO.getV1(),
-                hardwareInfoDTO.getV2(),
-                hardwareInfoDTO.getV3(),
-                hardwareInfoDTO.getV4(),
-                hardwareInfoDTO.getV5(),
-                hardwareInfoDTO.getV6(),
-                hardwareInfoDTO.getV7(),
-                hardwareInfoDTO.getV8(),
-                hardwareInfoDTO.getV9(),
-                hardwareInfoDTO.getV10(),
-                hardwareInfoDTO.getV11());
+                gasSensorValue,
+                flameSensorValue,
+                pressureSensorValue,
+                ampSensorValue,
+                temperatureSensorValue,
+                humiditySensorValue,
+                secondAmpSensorValue,
+                powerConsumption,
+                waterConsumption,
+                acSwitch,
+                acPumpSwitch);
         
         return ResponseDTO
                 .builder()

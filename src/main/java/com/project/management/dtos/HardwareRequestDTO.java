@@ -12,8 +12,6 @@ public class HardwareRequestDTO {
 
     private Boolean acPumpSwitch;
 
-    private Boolean reservedSwitch;
-
     private Boolean isShutdown;
 
     private Boolean isReboot;

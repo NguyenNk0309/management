@@ -28,8 +28,6 @@ public class HardwareInfoDTO {
 
     private Boolean acPumpSwitch;
 
-    private Boolean reservedSwitch;
-
     private Float powerConsumption;
 
     private Float waterConsumption;

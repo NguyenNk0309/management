@@ -122,7 +122,6 @@ public class RoomService {
         if (Objects.isNull(hardware)) {
             throw new MyException(HttpStatus.NOT_FOUND, "This Room Hasn't Connect To Hardware Yet");
         }
-        hardware.setReservedSwitch(requestDTO.getReservedSwitch());
         hardware.setAcSwitch(requestDTO.getAcSwitch());
         hardware.setAcPumpSwitch(requestDTO.getAcPumpSwitch());
         hardware.setIsReboot(requestDTO.getIsReboot());

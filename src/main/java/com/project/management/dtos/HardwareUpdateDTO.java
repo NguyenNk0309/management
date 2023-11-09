@@ -28,7 +28,5 @@ public class HardwareUpdateDTO {
 
     private Boolean V10; // acPumpSwitch
 
-    private Boolean V11; // reservedSwitch
-
 
 }

@@ -108,10 +108,11 @@ public class UserService implements UserDetailsService {
         user.setFullName(Objects.nonNull(requestDTO.getFullName()) ? requestDTO.getFullName() : user.getFullName());
         user.setPhoneNumber(Objects.nonNull(requestDTO.getPhoneNumber()) ? requestDTO.getPhoneNumber() : user.getPhoneNumber());
 
-        if (Objects.nonNull(requestDTO.getRole())) {
+        if (StringUtils.hasText(requestDTO.getRole())) {
             Role roles = roleRepository.findByName(requestDTO.getRole())
                     .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, "Role Not Found"));
-            user.setRoles(Collections.singletonList(roles));
+            user.getRoles().clear();
+            user.getRoles().add(roles);
         }
 
         if (StringUtils.hasText(requestDTO.getCurrentPassword())) {

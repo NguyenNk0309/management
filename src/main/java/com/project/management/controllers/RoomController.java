@@ -81,4 +81,15 @@ public class RoomController {
                 .build();
     }
 
+    @DeleteMapping("delete/{pk}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDTO deleteRoomByPk(@PathVariable Long pk) {
+        roomService.deleteRoomByPk(pk);
+        return ResponseDTO.builder()
+                .message("Success")
+                .status(HttpStatus.OK.value())
+                .data(null)
+                .build();
+    }
+
 }

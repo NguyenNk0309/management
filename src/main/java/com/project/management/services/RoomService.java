@@ -130,4 +130,10 @@ public class RoomService {
         roomRepository.save(room);
     }
 
+    public void deleteRoomByPk(Long pk) {
+        Room room = roomRepository.findById(pk)
+                .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));
+        roomRepository.deleteById(pk);
+    }
+
 }

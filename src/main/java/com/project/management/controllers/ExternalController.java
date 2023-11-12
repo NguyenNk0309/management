@@ -41,17 +41,17 @@ public class ExternalController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseDTO updateHardwareValue(
             @RequestParam(name = "token") String token,
-            @RequestParam(name = "V0") Integer gasSensorValue,
-            @RequestParam(name = "V1") Integer flameSensorValue,
-            @RequestParam(name = "V2") Float pressureSensorValue,
-            @RequestParam(name = "V3") Float ampSensorValue,
-            @RequestParam(name = "V4") Float temperatureSensorValue,
-            @RequestParam(name = "V5") Float humiditySensorValue,
-            @RequestParam(name = "V6") Float secondAmpSensorValue,
-            @RequestParam(name = "V7") Float powerConsumption,
-            @RequestParam(name = "V8") Float waterConsumption,
-            @RequestParam(name = "V9") Boolean acSwitch,
-            @RequestParam(name = "V10") Boolean acPumpSwitch
+            @RequestParam(name = "V0", defaultValue = "0") Integer gasSensorValue,
+            @RequestParam(name = "V1", defaultValue = "0") Integer flameSensorValue,
+            @RequestParam(name = "V2", defaultValue = "0") Float pressureSensorValue,
+            @RequestParam(name = "V3", defaultValue = "0") Float ampSensorValue,
+            @RequestParam(name = "V4", defaultValue = "0") Float temperatureSensorValue,
+            @RequestParam(name = "V5", defaultValue = "0") Float humiditySensorValue,
+            @RequestParam(name = "V6", defaultValue = "0") Float secondAmpSensorValue,
+            @RequestParam(name = "V7", defaultValue = "0") Float powerConsumption,
+            @RequestParam(name = "V8", defaultValue = "0") Float waterConsumption,
+            @RequestParam(name = "V9", defaultValue = "false") Boolean acSwitch,
+            @RequestParam(name = "V10", defaultValue = "false") Boolean acPumpSwitch
             ) {
         externalService.updateHardwareValue(
                 token,

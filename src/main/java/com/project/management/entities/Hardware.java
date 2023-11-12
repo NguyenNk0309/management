@@ -4,6 +4,8 @@ import lombok.*;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -43,5 +45,8 @@ public class Hardware extends BaseEntity {
     private Boolean isShutdown;
 
     private Boolean isReboot;
+
+    @OneToMany(mappedBy = "hardware", fetch = FetchType.LAZY)
+    private List<HardwareLimit> limitList = new ArrayList<>();
 
 }

@@ -2,6 +2,7 @@ package com.project.management.controllers;
 
 import com.project.management.dtos.HardwareRequestDTO;
 import com.project.management.dtos.ResponseDTO;
+import com.project.management.dtos.UpdateHardwareLimitDTO;
 import com.project.management.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -85,6 +86,17 @@ public class RoomController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseDTO deleteRoomByPk(@PathVariable Long pk) {
         roomService.deleteRoomByPk(pk);
+        return ResponseDTO.builder()
+                .message("Success")
+                .status(HttpStatus.OK.value())
+                .data(null)
+                .build();
+    }
+
+    @PutMapping("update-hardware-limit/{pk}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDTO updateHardwareLimit(@PathVariable Long pk, @RequestBody UpdateHardwareLimitDTO requestDTO) {
+        roomService.updateHardwareLimit(pk, requestDTO);
         return ResponseDTO.builder()
                 .message("Success")
                 .status(HttpStatus.OK.value())

@@ -20,9 +20,9 @@ public class Hardware extends BaseEntity {
     @JoinColumn(name = "room_fk")
     private Room room;
 
-    private Integer gasSensorValue;
+    private Float gasSensorValue;
 
-    private Integer flameSensorValue;
+    private Float flameSensorValue;
 
     private Float pressureSensorValue;
 
@@ -46,7 +46,7 @@ public class Hardware extends BaseEntity {
 
     private Boolean isReboot;
 
-    @OneToMany(mappedBy = "hardware", fetch = FetchType.LAZY)
-    private List<HardwareLimit> limitList = new ArrayList<>();
+    @OneToMany(mappedBy = "hardware", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<HardwareLimit> limitList;
 
 }

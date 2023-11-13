@@ -154,16 +154,34 @@ public class RoomService {
             hardwareLimit.get().setUpperLimit(requestDTO.getUpperLimit());
             hardwareLimit.get().setLowerLimit(requestDTO.getLowerLimit());
         } else {
-            hardware.getLimitList().add(HardwareLimit
-                            .builder()
-                            .hardwareId(requestDTO.getHardwareId())
-                            .upperLimit(requestDTO.getUpperLimit())
-                            .lowerLimit(requestDTO.getLowerLimit())
-                            .build());
+            HardwareLimit limit = new HardwareLimit();
+            limit.setHardwareId(requestDTO.getHardwareId());
+            limit.setUpperLimit(requestDTO.getUpperLimit());
+            limit.setLowerLimit(requestDTO.getLowerLimit());
+            limit.setHardware(hardware);
+            hardware.getLimitList().add(limit);
         }
 
-        hardwareRepository.save(hardware);
+        roomRepository.save(room);
 
+    }
+
+    public void deleteHardwareLimit(Long pk, String hardwareId) {
+        Room room = roomRepository.findById(pk)
+                .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));
+
+        Hardware hardware = room.getHardware();
+        if (Objects.isNull(hardware)) {
+            throw new MyException(HttpStatus.NOT_FOUND, "This Room Hasn't Connect To Hardware Yet");
+        }
+
+        Optional<HardwareLimit> hardwareLimit = hardware.getLimitList()
+                .stream().filter(item -> Objects.equals(item.getHardwareId(), hardwareId)).findFirst();
+
+        if (hardwareLimit.isPresent()) {
+            hardware.getLimitList().removeIf(limit -> Objects.equals(limit.getHardwareId(), hardwareId));
+            roomRepository.save(room);
+        }
     }
 
 }

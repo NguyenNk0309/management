@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -17,11 +18,11 @@ import javax.persistence.ManyToOne;
 public class HardwareLimit extends BaseEntity {
     private String hardwareId;
 
-    private Number upperLimit;
+    private Float upperLimit;
 
-    private Number lowerLimit;
+    private Float lowerLimit;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hardware_fk")
     private Hardware hardware;
 

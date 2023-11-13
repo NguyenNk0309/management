@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 @Builder
 public class HardwareUpdateDTO {
-    private Integer V0; // gasSensorValue
+    private Float V0; // gasSensorValue
 
-    private Integer V1; // flameSensorValue
+    private Float V1; // flameSensorValue
 
     private Float V2; // pressureSensorValue
 

@@ -93,10 +93,21 @@ public class RoomController {
                 .build();
     }
 
-    @PutMapping("update-hardware-limit/{pk}")
+    @PutMapping("update/hardware-limit/{pk}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDTO updateHardwareLimit(@PathVariable Long pk, @RequestBody UpdateHardwareLimitDTO requestDTO) {
         roomService.updateHardwareLimit(pk, requestDTO);
+        return ResponseDTO.builder()
+                .message("Success")
+                .status(HttpStatus.OK.value())
+                .data(null)
+                .build();
+    }
+
+    @DeleteMapping("delete/hardware-limit/{pk}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDTO deleteHardwareLimit(@PathVariable Long pk, @RequestParam(name = "hardwareId") String hardwareId) {
+        roomService.deleteHardwareLimit(pk, hardwareId);
         return ResponseDTO.builder()
                 .message("Success")
                 .status(HttpStatus.OK.value())

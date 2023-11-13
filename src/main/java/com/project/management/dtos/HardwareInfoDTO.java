@@ -10,9 +10,9 @@ import java.util.Date;
 @Getter
 @Setter
 public class HardwareInfoDTO {
-    private Integer gasSensorValue;
+    private Float gasSensorValue;
 
-    private Integer flameSensorValue;
+    private Float flameSensorValue;
 
     private Float pressureSensorValue;
 

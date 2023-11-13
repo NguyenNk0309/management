@@ -3,9 +3,9 @@ package com.project.management.dtos;
 import java.util.Date;
 
 public interface HardwareUpdateHistoriesDTO {
-    Integer getGasSensorValue();
+    Float getGasSensorValue();
 
-    Integer getFlameSensorValue();
+    Float getFlameSensorValue();
 
     Float getPressureSensorValue();
 

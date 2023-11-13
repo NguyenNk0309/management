@@ -27,6 +27,9 @@ public class ExternalService {
     @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
 
+    @Autowired
+    EmailSenderService emailSenderService;
+
     public String connectHardware(String token) {
         Room room = roomRepository.findByRegisterToken(token)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Token '%s' Not Found", token)));
@@ -40,30 +43,18 @@ public class ExternalService {
     }
 
 // TODO Send Mail
-    private void checkLimit(HardwareLimit hardwareLimit, String userEmail, Number value) {
-        if (value instanceof Integer) {
-            if (Objects.nonNull(hardwareLimit.getUpperLimit()) && (Integer) value > (Integer) hardwareLimit.getUpperLimit()) {
-
-            } else if (Objects.nonNull(hardwareLimit.getLowerLimit()) && (Integer) value < (Integer) hardwareLimit.getLowerLimit()) {
-
-            } else {
-
-            }
-        } else {
-            if (Objects.nonNull(hardwareLimit.getUpperLimit()) && (Float) value > (Float) hardwareLimit.getUpperLimit()) {
-
-            } else if (Objects.nonNull(hardwareLimit.getLowerLimit()) && (Float) value < (Float) hardwareLimit.getLowerLimit()) {
-
-            } else {
-
-            }
+    private void checkLimit(HardwareLimit hardwareLimit, String userEmail, Float value) {
+        if (Objects.nonNull(hardwareLimit.getUpperLimit()) && value > hardwareLimit.getUpperLimit()) {
+            emailSenderService.sendSimpleEmail(userEmail, "Smart Room Warning", "Upper Limit");
+        } else if (Objects.nonNull(hardwareLimit.getLowerLimit()) && value < hardwareLimit.getLowerLimit()) {
+            emailSenderService.sendSimpleEmail(userEmail, "Smart Room Warning", "Lower Limit");
         }
     }
 
     
     public void updateHardwareValue(String token, 
-                                    Integer gasSensorValue, 
-                                    Integer flameSensorValue,
+                                    Float gasSensorValue,
+                                    Float flameSensorValue,
                                     Float pressureSensorValue,
                                     Float ampSensorValue,
                                     Float temperatureSensorValue,

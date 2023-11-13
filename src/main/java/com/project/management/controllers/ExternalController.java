@@ -41,8 +41,8 @@ public class ExternalController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseDTO updateHardwareValue(
             @RequestParam(name = "token") String token,
-            @RequestParam(name = "V0", defaultValue = "0") Integer gasSensorValue,
-            @RequestParam(name = "V1", defaultValue = "0") Integer flameSensorValue,
+            @RequestParam(name = "V0", defaultValue = "0") Float gasSensorValue,
+            @RequestParam(name = "V1", defaultValue = "0") Float flameSensorValue,
             @RequestParam(name = "V2", defaultValue = "0") Float pressureSensorValue,
             @RequestParam(name = "V3", defaultValue = "0") Float ampSensorValue,
             @RequestParam(name = "V4", defaultValue = "0") Float temperatureSensorValue,

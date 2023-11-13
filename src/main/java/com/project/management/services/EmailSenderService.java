@@ -15,7 +15,7 @@ public class EmailSenderService {
                                 String body
     ) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("Smart Room");
+        message.setFrom("khoinguyen.030901@gmail.com");
         message.setTo(toEmail);
         message.setText(body);
         message.setSubject(subject);

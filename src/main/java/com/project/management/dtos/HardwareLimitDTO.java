@@ -7,7 +7,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class UpdateHardwareLimitDTO {
+public class HardwareLimitDTO {
     private String hardwareId;
 
     private Float upperLimit;

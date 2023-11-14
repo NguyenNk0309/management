@@ -57,17 +57,13 @@ public class PopulateData implements ApplicationRunner {
 
 //        Room
         User user = userRepository.findById(1L).get();
-        Room room1 = new Room("Room 1", user);
-        room1.setIsUsed(true);
-        roomRepository.save(room1);
-        Room room2 = new Room("Room 2", user);
-        room2.setIsUsed(true);
-        roomRepository.save(room2);
+        Room room = new Room("Test Room", user);
+        room.setIsUsed(true);
+        roomRepository.save(room);
 
 //        Hardware
-        Hardware hardware1 = Hardware.builder().room(room1).build();
-        Hardware hardware2 = Hardware.builder().room(room2).build();
-        hardwareRepository.saveAll(List.of(hardware1, hardware2));
+        Hardware hardware = Hardware.builder().room(room).build();
+        hardwareRepository.saveAll(List.of(hardware));
     }
 
 }

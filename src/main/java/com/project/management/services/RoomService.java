@@ -11,7 +11,6 @@ import com.project.management.repositories.RoomRepository;
 import com.project.management.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -135,7 +134,7 @@ public class RoomService {
         roomRepository.deleteById(pk);
     }
 
-    public void updateHardwareLimit(Long pk, UpdateHardwareLimitDTO requestDTO) {
+    public void updateHardwareLimit(Long pk, HardwareLimitDTO requestDTO) {
         Room room = roomRepository.findById(pk)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));
 
@@ -182,6 +181,35 @@ public class RoomService {
             hardware.getLimitList().removeIf(limit -> Objects.equals(limit.getHardwareId(), hardwareId));
             roomRepository.save(room);
         }
+    }
+
+    public HardwareLimitDTO getHardwareLimit(Long pk, String hardwareId) {
+        Room room = roomRepository.findById(pk)
+                .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));
+
+        Hardware hardware = room.getHardware();
+        if (Objects.isNull(hardware)) {
+            throw new MyException(HttpStatus.NOT_FOUND, "This Room Hasn't Connect To Hardware Yet");
+        }
+
+        Optional<HardwareLimit> hardwareLimit = hardware.getLimitList()
+                .stream().filter(item -> Objects.equals(item.getHardwareId(), hardwareId)).findFirst();
+
+        if (hardwareLimit.isPresent()) {
+            return HardwareLimitDTO
+                    .builder()
+                    .hardwareId(hardwareId)
+                    .upperLimit(hardwareLimit.get().getUpperLimit())
+                    .lowerLimit(hardwareLimit.get().getLowerLimit())
+                    .build();
+        }
+
+        return HardwareLimitDTO
+                .builder()
+                .hardwareId(hardwareId)
+                .upperLimit(null)
+                .lowerLimit(null)
+                .build();
     }
 
 }

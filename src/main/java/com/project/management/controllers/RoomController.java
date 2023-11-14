@@ -2,7 +2,7 @@ package com.project.management.controllers;
 
 import com.project.management.dtos.HardwareRequestDTO;
 import com.project.management.dtos.ResponseDTO;
-import com.project.management.dtos.UpdateHardwareLimitDTO;
+import com.project.management.dtos.HardwareLimitDTO;
 import com.project.management.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -95,7 +95,7 @@ public class RoomController {
 
     @PutMapping("update/hardware-limit/{pk}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDTO updateHardwareLimit(@PathVariable Long pk, @RequestBody UpdateHardwareLimitDTO requestDTO) {
+    public ResponseDTO updateHardwareLimit(@PathVariable Long pk, @RequestBody HardwareLimitDTO requestDTO) {
         roomService.updateHardwareLimit(pk, requestDTO);
         return ResponseDTO.builder()
                 .message("Success")
@@ -112,6 +112,16 @@ public class RoomController {
                 .message("Success")
                 .status(HttpStatus.OK.value())
                 .data(null)
+                .build();
+    }
+
+    @GetMapping("get/hardware-limit/{pk}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDTO getHardwareLimit(@PathVariable Long pk, @RequestParam(name = "hardwareId") String hardwareId) {
+        return ResponseDTO.builder()
+                .message("Success")
+                .status(HttpStatus.OK.value())
+                .data(roomService.getHardwareLimit(pk, hardwareId))
                 .build();
     }
 

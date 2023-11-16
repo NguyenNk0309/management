@@ -117,11 +117,11 @@ public class RoomController {
 
     @GetMapping("get/hardware-limit/{pk}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDTO getHardwareLimit(@PathVariable Long pk, @RequestParam(name = "hardwareId") String hardwareId) {
+    public ResponseDTO getHardwareLimit(@PathVariable Long pk) {
         return ResponseDTO.builder()
                 .message("Success")
                 .status(HttpStatus.OK.value())
-                .data(roomService.getHardwareLimit(pk, hardwareId))
+                .data(roomService.getHardwareLimit(pk))
                 .build();
     }
 

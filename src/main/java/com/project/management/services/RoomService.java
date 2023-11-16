@@ -183,7 +183,7 @@ public class RoomService {
         }
     }
 
-    public HardwareLimitDTO getHardwareLimit(Long pk, String hardwareId) {
+    public List<HardwareLimitDTO> getHardwareLimit(Long pk) {
         Room room = roomRepository.findById(pk)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));
 
@@ -192,24 +192,12 @@ public class RoomService {
             throw new MyException(HttpStatus.NOT_FOUND, "This Room Hasn't Connect To Hardware Yet");
         }
 
-        Optional<HardwareLimit> hardwareLimit = hardware.getLimitList()
-                .stream().filter(item -> Objects.equals(item.getHardwareId(), hardwareId)).findFirst();
-
-        if (hardwareLimit.isPresent()) {
-            return HardwareLimitDTO
-                    .builder()
-                    .hardwareId(hardwareId)
-                    .upperLimit(hardwareLimit.get().getUpperLimit())
-                    .lowerLimit(hardwareLimit.get().getLowerLimit())
-                    .build();
-        }
-
-        return HardwareLimitDTO
+        return hardware.getLimitList().stream().map(hardwareLimit -> HardwareLimitDTO
                 .builder()
-                .hardwareId(hardwareId)
-                .upperLimit(null)
-                .lowerLimit(null)
-                .build();
+                .hardwareId(hardwareLimit.getHardwareId())
+                .upperLimit(hardwareLimit.getUpperLimit())
+                .lowerLimit(hardwareLimit.getLowerLimit())
+                .build()).collect(Collectors.toList());
     }
 
 }

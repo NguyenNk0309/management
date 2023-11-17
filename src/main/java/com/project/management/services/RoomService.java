@@ -143,10 +143,6 @@ public class RoomService {
             throw new MyException(HttpStatus.NOT_FOUND, "This Room Hasn't Connect To Hardware Yet");
         }
 
-        if (Objects.isNull(requestDTO.getUpperLimit()) && Objects.isNull(requestDTO.getLowerLimit())) {
-            throw new MyException(HttpStatus.BAD_REQUEST, "Please Provide At Least Limit Value");
-        }
-
         Optional<HardwareLimit> hardwareLimit = hardware.getLimitList()
                 .stream().filter(item -> Objects.equals(item.getHardwareId(), requestDTO.getHardwareId())).findFirst();
         if (hardwareLimit.isPresent()) {

@@ -46,7 +46,7 @@ public class Hardware extends BaseEntity {
 
     private Boolean isReboot;
 
-    @OneToMany(mappedBy = "hardware", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "hardware", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<HardwareLimit> limitList = new ArrayList<>();
 
 }

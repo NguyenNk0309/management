@@ -93,6 +93,17 @@ public class RoomController {
                 .build();
     }
 
+    @PutMapping("update/{pk}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDTO updateRoomByPk(@PathVariable Long pk, @RequestParam(name = "name") String name) {
+        roomService.updateRoomByPk(pk, name);
+        return ResponseDTO.builder()
+                .message("Success")
+                .status(HttpStatus.OK.value())
+                .data(null)
+                .build();
+    }
+
     @PutMapping("update/hardware-limit/{pk}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDTO updateHardwareLimit(@PathVariable Long pk, @RequestBody HardwareLimitDTO requestDTO) {

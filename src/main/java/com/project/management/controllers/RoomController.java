@@ -96,11 +96,10 @@ public class RoomController {
     @PutMapping("update/{pk}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDTO updateRoomByPk(@PathVariable Long pk, @RequestParam(name = "name") String name) {
-        roomService.updateRoomByPk(pk, name);
         return ResponseDTO.builder()
                 .message("Success")
                 .status(HttpStatus.OK.value())
-                .data(null)
+                .data(roomService.updateRoomByPk(pk, name))
                 .build();
     }
 

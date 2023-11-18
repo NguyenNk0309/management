@@ -134,11 +134,11 @@ public class RoomService {
         roomRepository.deleteById(pk);
     }
 
-    public void updateRoomByPk(Long pk, String name) {
+    public String updateRoomByPk(Long pk, String name) {
         Room room = roomRepository.findById(pk)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));
         room.setName(name);
-        roomRepository.save(room);
+        return roomRepository.save(room).getName();
     }
 
     public void updateHardwareLimit(Long pk, HardwareLimitDTO requestDTO) {

@@ -4,8 +4,7 @@ import lombok.*;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.UUID;
+
 import static utils.ManagerUtil.generateRandomToken;
 
 @Entity
@@ -34,7 +33,7 @@ public class Room extends BaseEntity {
     public Room(String name, User user) {
         this.name = name;
         this.user = user;
-        this.registerToken = UUID.randomUUID().toString();
+        this.registerToken = generateRandomToken(8);
         this.apiToken = generateRandomToken(5);
         this.isUsed = false;
     }

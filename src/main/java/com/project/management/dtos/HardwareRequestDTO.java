@@ -8,11 +8,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class HardwareRequestDTO {
-    private Boolean acSwitch;
+    private Boolean acSwitch1;
 
-    private Boolean acPumpSwitch;
-
-    private Boolean isShutdown;
-
-    private Boolean isReboot;
+    private Boolean acSwitch2;
 }

@@ -87,16 +87,6 @@ public class RoomService {
 
     }
 
-    public List<HardwareUpdateHistoriesDTO> getHardwareHistoriesByRoomPk(Long roomPk, Long week) {
-        if (Objects.isNull(week)) {
-            week = 0L;
-        }
-
-        List<HardwareUpdateHistoriesDTO> historiesDTOS = hardwareRepository.getHardwareUpdateHistoriesByRoomPk(roomPk, week);
-        return historiesDTOS;
-
-    }
-
     public List<PowerAndWaterConsumptionHistoriesDTO> getPowerAndWaterConsumptionHistoriesByRoomPk(Long roomPk, String timeType, String timeFilter) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         List<PowerAndWaterConsumptionHistoriesDTO> historiesDTOS = new ArrayList<>();
@@ -120,10 +110,8 @@ public class RoomService {
         if (Objects.isNull(hardware)) {
             throw new MyException(HttpStatus.NOT_FOUND, "This Room Hasn't Connect To Hardware Yet");
         }
-        hardware.setAcSwitch(requestDTO.getAcSwitch());
-        hardware.setAcPumpSwitch(requestDTO.getAcPumpSwitch());
-        hardware.setIsReboot(requestDTO.getIsReboot());
-        hardware.setIsShutdown(requestDTO.getIsShutdown());
+        hardware.setAcSwitch1(requestDTO.getAcSwitch1());
+        hardware.setAcSwitch2(requestDTO.getAcSwitch2());
 
         roomRepository.save(room);
     }

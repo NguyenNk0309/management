@@ -21,30 +21,21 @@ public class Hardware extends BaseEntity {
     private Room room;
 
     private Float gasSensorValue;
-
-    private Float flameSensorValue;
-
-    private Float pressureSensorValue;
-
-    private Float ampSensorValue;
-
+    private Float voltageSensorValue;
+    private Float ampereSensorValue;
     private Float temperatureSensorValue;
-
     private Float humiditySensorValue;
+    private Float waterSensorValue;
+    private Float fireSensor1Value;
+    private Float fireSensor2Value;
+    private Float fireSensor3Value;
+    private Float fireSensor4Value;
+    private Float fireSensor5Value;
+    private Boolean acSwitch1;
+    private Boolean acSwitch2;
+    private Float totalPowerConsumption;
+    private Float totalWaterConsumption;
 
-    private Float secondAmpSensorValue;
-
-    private Float powerConsumption;
-
-    private Float waterConsumption;
-
-    private Boolean acSwitch;
-
-    private Boolean acPumpSwitch;
-
-    private Boolean isShutdown;
-
-    private Boolean isReboot;
 
     @OneToMany(mappedBy = "hardware", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<HardwareLimit> limitList = new ArrayList<>();

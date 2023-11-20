@@ -2,9 +2,11 @@ package com.project.management.services;
 
 import com.project.management.dtos.HardwareInfoDTO;
 import com.project.management.dtos.HardwareRequestDTO;
+import com.project.management.dtos.NotifyDTO;
 import com.project.management.entities.Hardware;
 import com.project.management.entities.HardwareLimit;
 import com.project.management.entities.Room;
+import com.project.management.entities.User;
 import com.project.management.exception.MyException;
 import com.project.management.repositories.HardwareRepository;
 import com.project.management.repositories.RoomRepository;
@@ -12,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import utils.ManagerUtil;
 
 import java.util.Date;
 import java.util.Objects;
@@ -42,28 +46,44 @@ public class ExternalService {
         return roomRepository.save(room).getApiToken();
     }
 
-// TODO Send Mail
-    private void checkLimit(HardwareLimit hardwareLimit, String userEmail, Float value) {
+    private void checkLimit(HardwareLimit hardwareLimit, User user, Float value, String sensorName) {
         if (Objects.nonNull(hardwareLimit.getUpperLimit()) && value > hardwareLimit.getUpperLimit()) {
-            emailSenderService.sendSimpleEmail(userEmail, "Smart Room Warning", "Upper Limit");
+            simpMessagingTemplate
+                    .convertAndSend(
+                            String.format("/ws/topic/user/%s", user.getPk()),
+                            NotifyDTO.builder()
+                                    .title(String.format("Notification For %s", sensorName))
+                                    .description(String.format("The Current Value Of %s (%f) Is Higher Than Your Upper Limit Setup (%f)", sensorName, value, hardwareLimit.getUpperLimit()))
+                                    .build());
+
         } else if (Objects.nonNull(hardwareLimit.getLowerLimit()) && value < hardwareLimit.getLowerLimit()) {
-            emailSenderService.sendSimpleEmail(userEmail, "Smart Room Warning", "Lower Limit");
+            simpMessagingTemplate
+                    .convertAndSend(
+                            String.format("/ws/topic/user/%s", user.getPk()),
+                            NotifyDTO.builder()
+                                    .title(String.format("Notification For %s", sensorName))
+                                    .description(String.format("The Current Value Of %s (%f) Is Lower Than Your Lower Limit Setup (%f)", sensorName, value, hardwareLimit.getLowerLimit()))
+                                    .build());
         }
     }
 
     
-    public void updateHardwareValue(String token, 
+    public void updateHardwareValue(String token,
                                     Float gasSensorValue,
-                                    Float flameSensorValue,
-                                    Float pressureSensorValue,
-                                    Float ampSensorValue,
+                                    Float voltageSensorValue,
+                                    Float ampereSensorValue,
                                     Float temperatureSensorValue,
                                     Float humiditySensorValue,
-                                    Float secondAmpSensorValue,
-                                    Float powerConsumption,
-                                    Float waterConsumption,
-                                    Boolean acSwitch,
-                                    Boolean acPumpSwitch) {
+                                    Float waterSensorValue,
+                                    Float fireSensor1Value,
+                                    Float fireSensor2Value,
+                                    Float fireSensor3Value,
+                                    Float fireSensor4Value,
+                                    Float fireSensor5Value,
+                                    Boolean acSwitch1,
+                                    Boolean acSwitch2,
+                                    Float totalPowerConsumption,
+                                    Float totalWaterConsumption) {
         Room room = roomRepository.findByApiToken(token)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Token '%s' Not Found", token)));
 
@@ -72,43 +92,57 @@ public class ExternalService {
             throw new MyException(HttpStatus.LOCKED, String.format("Room With Token '%s' Isn't Connected", token));
         }
 
-        String userEmail = room.getUser().getEmail();
-
         Hardware hardware = room.getHardware();
         hardware.setGasSensorValue(gasSensorValue);
-        hardware.setFlameSensorValue(flameSensorValue);
-        hardware.setPressureSensorValue(pressureSensorValue);
-        hardware.setAmpSensorValue(ampSensorValue);
+        hardware.setVoltageSensorValue(voltageSensorValue);
+        hardware.setAmpereSensorValue(ampereSensorValue);
         hardware.setTemperatureSensorValue(temperatureSensorValue);
         hardware.setHumiditySensorValue(humiditySensorValue);
-        hardware.setSecondAmpSensorValue(secondAmpSensorValue);
-        hardware.setPowerConsumption(powerConsumption);
-        hardware.setWaterConsumption(waterConsumption);
-        hardware.setAcSwitch(acSwitch);
-        hardware.setAcPumpSwitch(acPumpSwitch);
+        hardware.setWaterSensorValue(waterSensorValue);
+        hardware.setFireSensor1Value(fireSensor1Value);
+        hardware.setFireSensor2Value(fireSensor2Value);
+        hardware.setFireSensor3Value(fireSensor3Value);
+        hardware.setFireSensor4Value(fireSensor4Value);
+        hardware.setFireSensor5Value(fireSensor5Value);
+        hardware.setAcSwitch1(acSwitch1);
+        hardware.setAcSwitch2(acSwitch2);
+        hardware.setTotalPowerConsumption(totalPowerConsumption);
+        hardware.setTotalWaterConsumption(totalWaterConsumption);
 
         hardware.getLimitList().forEach(hardwareLimit -> {
             switch (hardwareLimit.getHardwareId()) {
                 case "V0":
-                    checkLimit(hardwareLimit, userEmail, gasSensorValue);
+                    checkLimit(hardwareLimit, room.getUser(), gasSensorValue, ManagerUtil.getSensorNameById("V0"));
                     break;
                 case "V1":
-                    checkLimit(hardwareLimit, userEmail, flameSensorValue);
+                    checkLimit(hardwareLimit, room.getUser(), voltageSensorValue, ManagerUtil.getSensorNameById("V1"));
                     break;
                 case "V2":
-                    checkLimit(hardwareLimit, userEmail, pressureSensorValue);
+                    checkLimit(hardwareLimit, room.getUser(), ampereSensorValue, ManagerUtil.getSensorNameById("V2"));
                     break;
                 case "V3":
-                    checkLimit(hardwareLimit, userEmail, ampSensorValue);
+                    checkLimit(hardwareLimit, room.getUser(), temperatureSensorValue, ManagerUtil.getSensorNameById("V3"));
                     break;
                 case "V4":
-                    checkLimit(hardwareLimit, userEmail, temperatureSensorValue);
+                    checkLimit(hardwareLimit, room.getUser(), humiditySensorValue, ManagerUtil.getSensorNameById("V4"));
                     break;
                 case "V5":
-                    checkLimit(hardwareLimit, userEmail, humiditySensorValue);
+                    checkLimit(hardwareLimit, room.getUser(), waterSensorValue, ManagerUtil.getSensorNameById("V5"));
                     break;
                 case "V6":
-                    checkLimit(hardwareLimit, userEmail, secondAmpSensorValue);
+                    checkLimit(hardwareLimit, room.getUser(), fireSensor1Value, ManagerUtil.getSensorNameById("V6"));
+                    break;
+                case "V7":
+                    checkLimit(hardwareLimit, room.getUser(), fireSensor2Value, ManagerUtil.getSensorNameById("V7"));
+                    break;
+                case "V8":
+                    checkLimit(hardwareLimit, room.getUser(), fireSensor3Value, ManagerUtil.getSensorNameById("V8"));
+                    break;
+                case "V9":
+                    checkLimit(hardwareLimit, room.getUser(), fireSensor4Value, ManagerUtil.getSensorNameById("V9"));
+                    break;
+                case "V10":
+                    checkLimit(hardwareLimit, room.getUser(), fireSensor5Value, ManagerUtil.getSensorNameById("V10"));
                     break;
             }
         });
@@ -118,14 +152,20 @@ public class ExternalService {
                         HardwareInfoDTO
                                 .builder()
                                 .gasSensorValue(gasSensorValue)
-                                .flameSensorValue(flameSensorValue)
-                                .pressureSensorValue(pressureSensorValue)
-                                .ampSensorValue(ampSensorValue)
+                                .voltageSensorValue(voltageSensorValue)
+                                .ampereSensorValue(ampereSensorValue)
                                 .temperatureSensorValue(temperatureSensorValue)
                                 .humiditySensorValue(humiditySensorValue)
-                                .secondAmpSensorValue(secondAmpSensorValue)
-                                .acSwitch(acSwitch)
-                                .acPumpSwitch(acPumpSwitch)
+                                .waterSensorValue(waterSensorValue)
+                                .fireSensor1Value(fireSensor1Value)
+                                .fireSensor2Value(fireSensor2Value)
+                                .fireSensor3Value(fireSensor3Value)
+                                .fireSensor4Value(fireSensor4Value)
+                                .fireSensor5Value(fireSensor5Value)
+                                .acSwitch1(acSwitch1)
+                                .acSwitch2(acSwitch2)
+                                .totalPowerConsumption(totalPowerConsumption)
+                                .totalWaterConsumption(totalWaterConsumption)
                                 .updatedOn(new Date())
                                 .build());
 
@@ -143,10 +183,8 @@ public class ExternalService {
 
         return HardwareRequestDTO
                 .builder()
-                .acPumpSwitch(room.getHardware().getAcPumpSwitch())
-                .acSwitch(room.getHardware().getAcSwitch())
-                .isShutdown(room.getHardware().getIsShutdown())
-                .isReboot(room.getHardware().getIsReboot())
+                .acSwitch1(room.getHardware().getAcSwitch1())
+                .acSwitch2(room.getHardware().getAcSwitch2())
                 .build();
     }
 }

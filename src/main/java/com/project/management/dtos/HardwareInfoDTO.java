@@ -11,26 +11,19 @@ import java.util.Date;
 @Setter
 public class HardwareInfoDTO {
     private Float gasSensorValue;
-
-    private Float flameSensorValue;
-
-    private Float pressureSensorValue;
-
-    private Float ampSensorValue;
-
+    private Float voltageSensorValue;
+    private Float ampereSensorValue;
     private Float temperatureSensorValue;
-
     private Float humiditySensorValue;
-
-    private Float secondAmpSensorValue;
-
-    private Boolean acSwitch;
-
-    private Boolean acPumpSwitch;
-
-    private Float powerConsumption;
-
-    private Float waterConsumption;
-
+    private Float waterSensorValue;
+    private Float fireSensor1Value;
+    private Float fireSensor2Value;
+    private Float fireSensor3Value;
+    private Float fireSensor4Value;
+    private Float fireSensor5Value;
+    private Boolean acSwitch1;
+    private Boolean acSwitch2;
+    private Float totalPowerConsumption;
+    private Float totalWaterConsumption;
     private Date updatedOn;
 }

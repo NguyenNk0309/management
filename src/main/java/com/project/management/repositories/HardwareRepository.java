@@ -21,7 +21,7 @@ public interface HardwareRepository extends JpaRepository<Hardware, Long> {
             "MAX(aud.total_power_consumption) - MIN(aud.total_power_consumption) AS powerConsumption, " +
             "MAX(aud.total_water_consumption) - MIN(aud.total_water_consumption) AS waterConsumption " +
             "FROM hardware_aud aud " +
-            "JOIN room r ON aud.room_fk = r.pk " +
+            "JOIN room r ON aud.pk = r.hardware_fk " +
             "JOIN revinfo ri ON ri.rev = aud.rev " +
             "WHERE r.pk = :roomPk " +
             "AND (CASE WHEN :timeType = 'year' THEN YEAR("+REV_TIME+") = YEAR(:timeFilter) " +

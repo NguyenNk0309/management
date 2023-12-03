@@ -23,7 +23,8 @@ public class Room extends BaseEntity {
 
     private Boolean isUsed;
 
-    @OneToOne(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "hardware_fk")
     private Hardware hardware;
 
     @ManyToOne(fetch = FetchType.LAZY)

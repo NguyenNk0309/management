@@ -16,8 +16,7 @@ import java.util.List;
 @Audited
 public class Hardware extends BaseEntity {
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_fk")
+    @OneToOne(mappedBy = "hardware", fetch = FetchType.LAZY)
     private Room room;
 
     private Float gasSensorValue;

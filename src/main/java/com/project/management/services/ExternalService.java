@@ -37,12 +37,11 @@ public class ExternalService {
     public String connectHardware(String token) {
         Room room = roomRepository.findByRegisterToken(token)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Token '%s' Not Found", token)));
-        Boolean isConnected = room.getIsUsed();
-        if (isConnected) {
-            throw new MyException(HttpStatus.CONFLICT, String.format("Room With Token '%s' Was Already Connected", token));
+        Hardware hardware = room.getHardware();
+        if (Objects.isNull(hardware)) {
+            room.setHardware(new Hardware());
         }
         room.setIsUsed(true);
-        room.setHardware(Hardware.builder().build());
         return roomRepository.save(room).getApiToken();
     }
 

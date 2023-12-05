@@ -45,20 +45,20 @@ public class ExternalService {
         return roomRepository.save(room).getApiToken();
     }
 
-    private void checkLimit(HardwareLimit hardwareLimit, User user, Float value, String sensorName) {
+    private void checkLimit(HardwareLimit hardwareLimit, User user, Float value, String sensorName, String roomName) {
         if (Objects.nonNull(hardwareLimit.getUpperLimit()) && value > hardwareLimit.getUpperLimit()) {
             simpMessagingTemplate
                     .convertAndSend(
                             String.format("/ws/topic/user/%s", user.getPk()),
                             NotifyDTO.builder()
-                                    .title(String.format("Notification For %s", sensorName))
+                                    .title(String.format("Notification For %s In Room Name: %s", sensorName, roomName))
                                     .description(String.format("The Current Value Of %s (%.2f) Is Higher Than Your Upper Limit Setup (%.2f)", sensorName, value, hardwareLimit.getUpperLimit()))
                                     .build());
 
             simpMessagingTemplate
                     .convertAndSend("/ws/topic/role/ADMIN",
                             NotifyDTO.builder()
-                                    .title(String.format("Notification For %s", sensorName))
+                                    .title(String.format("Notification For %s In Room Name: %s", sensorName, roomName))
                                     .description(String.format("The Current Value Of %s (%.2f) Is Higher Than Your Upper Limit Setup (%.2f)", sensorName, value, hardwareLimit.getUpperLimit()))
                                     .build());
 
@@ -68,14 +68,14 @@ public class ExternalService {
                     .convertAndSend(
                             String.format("/ws/topic/user/%s", user.getPk()),
                             NotifyDTO.builder()
-                                    .title(String.format("Notification For %s", sensorName))
+                                    .title(String.format("Notification For %s In Room Name: %s", sensorName, roomName))
                                     .description(String.format("The Current Value Of %s (%.2f) Is Lower Than Your Lower Limit Setup (%.2f)", sensorName, value, hardwareLimit.getLowerLimit()))
                                     .build());
 
             simpMessagingTemplate
                     .convertAndSend("/ws/topic/role/ADMIN",
                             NotifyDTO.builder()
-                                    .title(String.format("Notification For %s", sensorName))
+                                    .title(String.format("Notification For %s In Room Name: %s", sensorName, roomName))
                                     .description(String.format("The Current Value Of %s (%.2f) Is Lower Than Your Lower Limit Setup (%.2f)", sensorName, value, hardwareLimit.getLowerLimit()))
                                     .build());
 
@@ -127,37 +127,37 @@ public class ExternalService {
         hardware.getLimitList().forEach(hardwareLimit -> {
             switch (hardwareLimit.getHardwareId()) {
                 case "V0":
-                    checkLimit(hardwareLimit, room.getUser(), gasSensorValue, ManagerUtil.getSensorNameById("V0"));
+                    checkLimit(hardwareLimit, room.getUser(), gasSensorValue, ManagerUtil.getSensorNameById("V0"), room.getName());
                     break;
                 case "V1":
-                    checkLimit(hardwareLimit, room.getUser(), voltageSensorValue, ManagerUtil.getSensorNameById("V1"));
+                    checkLimit(hardwareLimit, room.getUser(), voltageSensorValue, ManagerUtil.getSensorNameById("V1"), room.getName());
                     break;
                 case "V2":
-                    checkLimit(hardwareLimit, room.getUser(), ampereSensorValue, ManagerUtil.getSensorNameById("V2"));
+                    checkLimit(hardwareLimit, room.getUser(), ampereSensorValue, ManagerUtil.getSensorNameById("V2"), room.getName());
                     break;
                 case "V3":
-                    checkLimit(hardwareLimit, room.getUser(), temperatureSensorValue, ManagerUtil.getSensorNameById("V3"));
+                    checkLimit(hardwareLimit, room.getUser(), temperatureSensorValue, ManagerUtil.getSensorNameById("V3"), room.getName());
                     break;
                 case "V4":
-                    checkLimit(hardwareLimit, room.getUser(), humiditySensorValue, ManagerUtil.getSensorNameById("V4"));
+                    checkLimit(hardwareLimit, room.getUser(), humiditySensorValue, ManagerUtil.getSensorNameById("V4"), room.getName());
                     break;
                 case "V5":
-                    checkLimit(hardwareLimit, room.getUser(), waterSensorValue, ManagerUtil.getSensorNameById("V5"));
+                    checkLimit(hardwareLimit, room.getUser(), waterSensorValue, ManagerUtil.getSensorNameById("V5"), room.getName());
                     break;
                 case "V6":
-                    checkLimit(hardwareLimit, room.getUser(), fireSensor1Value, ManagerUtil.getSensorNameById("V6"));
+                    checkLimit(hardwareLimit, room.getUser(), fireSensor1Value, ManagerUtil.getSensorNameById("V6"), room.getName());
                     break;
                 case "V7":
-                    checkLimit(hardwareLimit, room.getUser(), fireSensor2Value, ManagerUtil.getSensorNameById("V7"));
+                    checkLimit(hardwareLimit, room.getUser(), fireSensor2Value, ManagerUtil.getSensorNameById("V7"), room.getName());
                     break;
                 case "V8":
-                    checkLimit(hardwareLimit, room.getUser(), fireSensor3Value, ManagerUtil.getSensorNameById("V8"));
+                    checkLimit(hardwareLimit, room.getUser(), fireSensor3Value, ManagerUtil.getSensorNameById("V8"), room.getName());
                     break;
                 case "V9":
-                    checkLimit(hardwareLimit, room.getUser(), fireSensor4Value, ManagerUtil.getSensorNameById("V9"));
+                    checkLimit(hardwareLimit, room.getUser(), fireSensor4Value, ManagerUtil.getSensorNameById("V9"), room.getName());
                     break;
                 case "V10":
-                    checkLimit(hardwareLimit, room.getUser(), fireSensor5Value, ManagerUtil.getSensorNameById("V10"));
+                    checkLimit(hardwareLimit, room.getUser(), fireSensor5Value, ManagerUtil.getSensorNameById("V10"), room.getName());
                     break;
             }
         });

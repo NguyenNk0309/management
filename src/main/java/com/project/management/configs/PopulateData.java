@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.Optional;
 
-//@Component
+@Component
 public class PopulateData implements ApplicationRunner {
     @Autowired
     private RoleRepository roleRepository;
@@ -36,26 +36,28 @@ public class PopulateData implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 //        Role
-        roleRepository.save(Role.builder().name(RoleEnum.ADMIN.desc).build());
-        roleRepository.save(Role.builder().name(RoleEnum.USER.desc).build());
+        Optional<Role> adminRole = roleRepository.findByName(RoleEnum.ADMIN.desc);
+        Optional<Role> userRole = roleRepository.findByName(RoleEnum.USER.desc);
+
+        if (adminRole.isEmpty() && userRole.isEmpty()) {
+            roleRepository.save(Role.builder().name(RoleEnum.ADMIN.desc).build());
+            roleRepository.save(Role.builder().name(RoleEnum.USER.desc).build());
+        }
 
 //        User
-        Role adminRole = roleRepository.findByName(RoleEnum.ADMIN.desc).get();
-        Role userRole = roleRepository.findByName(RoleEnum.USER.desc).get();
-
         Optional<User> adminUser = userRepository.findByUsername("admin");
 
-//        if (adminUser.isEmpty()) {
-//            userRepository.save(User.builder()
-//                    .username("admin")
-//                    .password(passwordEncoder.encode("admin"))
-//                    .address("236 Ha Huy Giap, P.Thanh Loc, Q.12, TP.HCM")
-//                    .email("khoinguyen.030901@gmail.com")
-//                    .phoneNumber("0767503530")
-//                    .fullName("Nguyen Khoi Nguyen")
-//                    .roles(Collections.singletonList(adminRole))
-//                    .build());
-//        }
+        if (adminUser.isEmpty()) {
+            userRepository.save(User.builder()
+                    .username("admin")
+                    .password(passwordEncoder.encode("admin"))
+                    .address("236 Ha Huy Giap, P.Thanh Loc, Q.12, TP.HCM")
+                    .email("khoinguyen.030901@gmail.com")
+                    .phoneNumber("0767503530")
+                    .fullName("Nguyen Khoi Nguyen")
+                    .roles(Collections.singletonList(adminRole.get()))
+                    .build());
+        }
 
     }
 

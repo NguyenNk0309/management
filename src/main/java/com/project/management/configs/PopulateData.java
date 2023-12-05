@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.Optional;
 
-@Component
+//@Component
 public class PopulateData implements ApplicationRunner {
     @Autowired
     private RoleRepository roleRepository;

@@ -45,17 +45,17 @@ public class PopulateData implements ApplicationRunner {
 
         Optional<User> adminUser = userRepository.findByUsername("admin");
 
-        if (adminUser.isEmpty()) {
-            userRepository.save(User.builder()
-                    .username("admin")
-                    .password(passwordEncoder.encode("admin"))
-                    .address("236 Ha Huy Giap, P.Thanh Loc, Q.12, TP.HCM")
-                    .email("khoinguyen.030901@gmail.com")
-                    .phoneNumber("0767503530")
-                    .fullName("Nguyen Khoi Nguyen")
-                    .roles(Collections.singletonList(adminRole))
-                    .build());
-        }
+//        if (adminUser.isEmpty()) {
+//            userRepository.save(User.builder()
+//                    .username("admin")
+//                    .password(passwordEncoder.encode("admin"))
+//                    .address("236 Ha Huy Giap, P.Thanh Loc, Q.12, TP.HCM")
+//                    .email("khoinguyen.030901@gmail.com")
+//                    .phoneNumber("0767503530")
+//                    .fullName("Nguyen Khoi Nguyen")
+//                    .roles(Collections.singletonList(adminRole))
+//                    .build());
+//        }
 
     }
 

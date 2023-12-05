@@ -55,6 +55,14 @@ public class ExternalService {
                                     .description(String.format("The Current Value Of %s (%.2f) Is Higher Than Your Upper Limit Setup (%.2f)", sensorName, value, hardwareLimit.getUpperLimit()))
                                     .build());
 
+            simpMessagingTemplate
+                    .convertAndSend("/ws/topic/role/ADMIN",
+                            NotifyDTO.builder()
+                                    .title(String.format("Notification For %s", sensorName))
+                                    .description(String.format("The Current Value Of %s (%.2f) Is Higher Than Your Upper Limit Setup (%.2f)", sensorName, value, hardwareLimit.getUpperLimit()))
+                                    .build());
+
+
         } else if (Objects.nonNull(hardwareLimit.getLowerLimit()) && value < hardwareLimit.getLowerLimit()) {
             simpMessagingTemplate
                     .convertAndSend(
@@ -63,6 +71,14 @@ public class ExternalService {
                                     .title(String.format("Notification For %s", sensorName))
                                     .description(String.format("The Current Value Of %s (%.2f) Is Lower Than Your Lower Limit Setup (%.2f)", sensorName, value, hardwareLimit.getLowerLimit()))
                                     .build());
+
+            simpMessagingTemplate
+                    .convertAndSend("/ws/topic/role/ADMIN",
+                            NotifyDTO.builder()
+                                    .title(String.format("Notification For %s", sensorName))
+                                    .description(String.format("The Current Value Of %s (%.2f) Is Lower Than Your Lower Limit Setup (%.2f)", sensorName, value, hardwareLimit.getLowerLimit()))
+                                    .build());
+
         }
     }
 

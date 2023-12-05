@@ -36,22 +36,30 @@ public class PopulateData implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 //        Role
-        roleRepository.save(Role.builder().name(RoleEnum.ADMIN.desc).build());
-        roleRepository.save(Role.builder().name(RoleEnum.USER.desc).build());
+        Optional<Role> adminRole = roleRepository.findByName(RoleEnum.ADMIN.desc);
+        Optional<Role> userRole = roleRepository.findByName(RoleEnum.USER.desc);
 
+        if (adminRole.isEmpty() && userRole.isEmpty()) {
+            roleRepository.save(Role.builder().name(RoleEnum.ADMIN.desc).build());
+            roleRepository.save(Role.builder().name(RoleEnum.USER.desc).build());
+        }
 
 //        User
-        Role role = roleRepository.findByName(RoleEnum.ADMIN.desc).get();
+        Optional<User> adminUser = userRepository.findByUsername("admin");
 
-        userRepository.save(User.builder()
-                .username("admin")
-                .password(passwordEncoder.encode("admin"))
-                .address("236 Ha Huy Giap, P.Thanh Loc, Q.12, TP.HCM")
-                .email("khoinguyen.030901@gmail.com")
-                .phoneNumber("0767503530")
-                .fullName("Nguyen Khoi Nguyen")
-                .roles(Collections.singletonList(role))
-                .build());
+        if (adminUser.isEmpty()) {
+            Role role = roleRepository.findByName(RoleEnum.ADMIN.desc).get();
+
+            userRepository.save(User.builder()
+                    .username("admin")
+                    .password(passwordEncoder.encode("admin"))
+                    .address("236 Ha Huy Giap, P.Thanh Loc, Q.12, TP.HCM")
+                    .email("khoinguyen.030901@gmail.com")
+                    .phoneNumber("0767503530")
+                    .fullName("Nguyen Khoi Nguyen")
+                    .roles(Collections.singletonList(role))
+                    .build());
+        }
 
     }
 

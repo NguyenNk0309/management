@@ -48,6 +48,8 @@ public class PopulateData implements ApplicationRunner {
         Optional<User> adminUser = userRepository.findByUsername("admin");
 
         if (adminUser.isEmpty()) {
+            Role role = roleRepository.findByName(RoleEnum.ADMIN.desc).get();
+
             userRepository.save(User.builder()
                     .username("admin")
                     .password(passwordEncoder.encode("admin"))
@@ -55,7 +57,7 @@ public class PopulateData implements ApplicationRunner {
                     .email("khoinguyen.030901@gmail.com")
                     .phoneNumber("0767503530")
                     .fullName("Nguyen Khoi Nguyen")
-                    .roles(Collections.singletonList(adminRole.get()))
+                    .roles(Collections.singletonList(role))
                     .build());
         }
 

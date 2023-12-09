@@ -4,6 +4,7 @@ import com.project.management.dtos.AmpereAndVoltageHistoriesDTO;
 import com.project.management.dtos.PowerAndWaterConsumptionHistoriesDTO;
 import com.project.management.entities.Hardware;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -43,6 +44,7 @@ public interface HardwareRepository extends JpaRepository<Hardware, Long> {
             nativeQuery = true)
     List<AmpereAndVoltageHistoriesDTO> getAmpereAndVoltageHistoriesByRoomPk(Long roomPk, Date timeFilter);
 
+    @Modifying
     @Query(value = "DELETE FROM hardware_aud aud WHERE aud.pk = :id", nativeQuery = true)
     void deleteAuditByHardwareId(Long id);
 }

@@ -12,6 +12,7 @@ import com.project.management.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -125,6 +126,7 @@ public class RoomService {
         roomRepository.save(room);
     }
 
+    @Transactional
     public void deleteRoomByPk(Long pk) {
         Room room = roomRepository.findById(pk)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));

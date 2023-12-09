@@ -42,7 +42,14 @@ public class ExternalService {
 
         Hardware hardware = room.getHardware();
         if (Objects.isNull(hardware)) {
-            room.setHardware(new Hardware());
+            room.setHardware(Hardware
+                            .builder()
+                            .acSwitch1(false)
+                            .acSwitch2(false)
+                            .userReq(false)
+                            .resetFactoryReq(false)
+                            .rebootReq(false)
+                            .build());
         }
         room.setIsUsed(true);
         return roomRepository.save(room).getApiToken();

@@ -1,5 +1,6 @@
 package com.project.management.repositories;
 
+import com.project.management.dtos.AmpereAndVoltageHistoriesDTO;
 import com.project.management.dtos.PowerAndWaterConsumptionHistoriesDTO;
 import com.project.management.entities.Hardware;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,5 +31,16 @@ public interface HardwareRepository extends JpaRepository<Hardware, Long> {
             "GROUP BY time ORDER BY time ",
             nativeQuery = true)
     List<PowerAndWaterConsumptionHistoriesDTO> getPowerAndWaterConsumptionHistoriesByRoomPk(Long roomPk, String timeType, Date timeFilter);
+
+    @Query(value = "SELECT " +
+            "aud.ampere_sensor_value AS ampere, " +
+            "aud.voltage_sensor_value AS voltage " +
+            "FROM hardware_aud aud " +
+            "JOIN room r ON aud.pk = r.hardware_fk " +
+            "JOIN revinfo ri ON ri.rev = aud.rev " +
+            "WHERE r.pk = :roomPk " +
+            "AND DATE_FORMAT("+REV_TIME+", '%Y-%m-%d') = DATE_FORMAT(:timeFilter, '%Y-%m-%d') ",
+            nativeQuery = true)
+    List<AmpereAndVoltageHistoriesDTO> getAmpereAndVoltageHistoriesByRoomPk(Long roomPk, Date timeFilter);
 }
 

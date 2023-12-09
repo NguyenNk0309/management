@@ -54,7 +54,8 @@ public class ExternalController {
             @RequestParam(name = "V11", defaultValue = "false") Boolean acSwitch1,
             @RequestParam(name = "V12", defaultValue = "false") Boolean acSwitch2,
             @RequestParam(name = "V13", defaultValue = "0") Float totalPowerConsumption,
-            @RequestParam(name = "V14", defaultValue = "0") Float totalWaterConsumption
+            @RequestParam(name = "V14", defaultValue = "0") Float totalWaterConsumption,
+            @RequestParam(name = "V15", defaultValue = "false") Boolean acSwitch3
             ) {
         externalService.updateHardwareValue(
                 token,
@@ -72,7 +73,8 @@ public class ExternalController {
                 acSwitch1,
                 acSwitch2,
                 totalPowerConsumption,
-                totalWaterConsumption);
+                totalWaterConsumption,
+                acSwitch3);
         
         return ResponseDTO
                 .builder()

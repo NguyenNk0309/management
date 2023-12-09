@@ -112,6 +112,7 @@ public class RoomService {
         }
         hardware.setAcSwitch1(requestDTO.getAcSwitch1());
         hardware.setAcSwitch2(requestDTO.getAcSwitch2());
+        hardware.setAcSwitch3(requestDTO.getAcSwitch3());
 
         roomRepository.save(room);
     }

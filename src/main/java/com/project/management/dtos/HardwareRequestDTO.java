@@ -11,4 +11,6 @@ public class HardwareRequestDTO {
     private Boolean acSwitch1;
 
     private Boolean acSwitch2;
+
+    private Boolean acSwitch3;
 }

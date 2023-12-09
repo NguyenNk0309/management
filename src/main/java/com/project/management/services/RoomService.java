@@ -105,6 +105,20 @@ public class RoomService {
 
     }
 
+    public List<AmpereAndVoltageHistoriesDTO> getAmpereAndVoltageHistoriesByRoomPk(Long roomPk, String timeFilter) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        List<AmpereAndVoltageHistoriesDTO> historiesDTOS = new ArrayList<>();
+
+        try {
+            Date date = dateFormat.parse(timeFilter);
+            historiesDTOS = hardwareRepository
+                    .getAmpereAndVoltageHistoriesByRoomPk(roomPk, date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return historiesDTOS;
+    }
+
     public void updateHardware(Long pk, HardwareRequestDTO requestDTO) {
        Room room = roomRepository.findById(pk)
                .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));

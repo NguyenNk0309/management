@@ -71,6 +71,19 @@ public class RoomController {
                 .build();
     }
 
+    @GetMapping("{pk}/ampere-voltage-histories")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDTO getAmpereAndVoltageHistoriesByRoomPk(
+            @PathVariable Long pk,
+            @RequestParam(name = "timeFilter")String timeFilter
+    ) {
+        return ResponseDTO.builder()
+                .message("Success")
+                .status(HttpStatus.OK.value())
+                .data(roomService.getAmpereAndVoltageHistoriesByRoomPk(pk, timeFilter))
+                .build();
+    }
+
     @DeleteMapping("delete/{pk}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseDTO deleteRoomByPk(@PathVariable Long pk) {

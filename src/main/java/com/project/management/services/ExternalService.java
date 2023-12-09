@@ -44,11 +44,24 @@ public class ExternalService {
         if (Objects.isNull(hardware)) {
             room.setHardware(Hardware
                             .builder()
+                            .gasSensorValue(0F)
+                            .voltageSensorValue(0F)
+                            .ampereSensorValue(0F)
+                            .temperatureSensorValue(0F)
+                            .humiditySensorValue(0F)
+                            .waterSensorValue(0F)
+                            .fireSensor1Value(0F)
+                            .fireSensor2Value(0F)
+                            .fireSensor3Value(0F)
+                            .fireSensor4Value(0F)
+                            .fireSensor5Value(0F)
                             .acSwitch1(false)
                             .acSwitch2(false)
                             .userReq(false)
                             .resetFactoryReq(false)
                             .rebootReq(false)
+                            .totalPowerConsumption(0F)
+                            .totalWaterConsumption(0F)
                             .build());
         }
         room.setIsUsed(true);

@@ -32,7 +32,9 @@ public class Hardware extends BaseEntity {
     private Float fireSensor5Value;
     private Boolean acSwitch1;
     private Boolean acSwitch2;
-    private Boolean acSwitch3;
+    private Boolean userReq;
+    private Boolean resetFactoryReq;
+    private Boolean rebootReq;
     private Float totalPowerConsumption;
     private Float totalWaterConsumption;
 

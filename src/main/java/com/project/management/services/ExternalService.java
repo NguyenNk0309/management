@@ -99,7 +99,9 @@ public class ExternalService {
                                     Boolean acSwitch2,
                                     Float totalPowerConsumption,
                                     Float totalWaterConsumption,
-                                    Boolean acSwitch3) {
+                                    Boolean userReq,
+                                    Boolean resetFactoryReq,
+                                    Boolean rebootReq) {
         Room room = roomRepository.findByApiToken(token)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Token '%s' Not Found", token)));
 
@@ -122,7 +124,9 @@ public class ExternalService {
         hardware.setFireSensor5Value(fireSensor5Value);
         hardware.setAcSwitch1(acSwitch1);
         hardware.setAcSwitch2(acSwitch2);
-        hardware.setAcSwitch3(acSwitch3);
+        hardware.setUserReq(userReq);
+        hardware.setResetFactoryReq(resetFactoryReq);
+        hardware.setRebootReq(rebootReq);
         hardware.setTotalPowerConsumption(totalPowerConsumption);
         hardware.setTotalWaterConsumption(totalWaterConsumption);
 
@@ -181,7 +185,9 @@ public class ExternalService {
                                 .fireSensor5Value(fireSensor5Value)
                                 .acSwitch1(acSwitch1)
                                 .acSwitch2(acSwitch2)
-                                .acSwitch3(acSwitch3)
+                                .userReq(userReq)
+                                .resetFactoryReq(resetFactoryReq)
+                                .rebootReq(rebootReq)
                                 .totalPowerConsumption(totalPowerConsumption)
                                 .totalWaterConsumption(totalWaterConsumption)
                                 .updatedOn(new Date())
@@ -203,7 +209,9 @@ public class ExternalService {
                 .builder()
                 .acSwitch1(room.getHardware().getAcSwitch1())
                 .acSwitch2(room.getHardware().getAcSwitch2())
-                .acSwitch3(room.getHardware().getAcSwitch3())
+                .userReq(room.getHardware().getUserReq())
+                .resetFactoryReq(room.getHardware().getResetFactoryReq())
+                .rebootReq(room.getHardware().getRebootReq())
                 .build();
     }
 }

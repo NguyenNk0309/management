@@ -42,5 +42,8 @@ public interface HardwareRepository extends JpaRepository<Hardware, Long> {
             "AND DATE_FORMAT("+REV_TIME+", '%Y-%m-%d') = DATE_FORMAT(:timeFilter, '%Y-%m-%d') ",
             nativeQuery = true)
     List<AmpereAndVoltageHistoriesDTO> getAmpereAndVoltageHistoriesByRoomPk(Long roomPk, Date timeFilter);
+
+    @Query(value = "DELETE FROM hardware_aud aud WHERE aud.pk = :id", nativeQuery = true)
+    void deleteAuditByHardwareId(Long id);
 }
 

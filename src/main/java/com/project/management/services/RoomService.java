@@ -112,7 +112,9 @@ public class RoomService {
         }
         hardware.setAcSwitch1(requestDTO.getAcSwitch1());
         hardware.setAcSwitch2(requestDTO.getAcSwitch2());
-        hardware.setAcSwitch3(requestDTO.getAcSwitch3());
+        hardware.setUserReq(requestDTO.getUserReq());
+        hardware.setRebootReq(requestDTO.getRebootReq());
+        hardware.setResetFactoryReq(requestDTO.getResetFactoryReq());
 
         roomRepository.save(room);
     }
@@ -120,7 +122,10 @@ public class RoomService {
     public void deleteRoomByPk(Long pk) {
         Room room = roomRepository.findById(pk)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));
+        Long hardwareId = room.getHardware().getPk();
         roomRepository.deleteById(pk);
+        hardwareRepository.deleteById(hardwareId);
+        hardwareRepository.deleteAuditByHardwareId(hardwareId);
     }
 
     public String updateRoomByPk(Long pk, String name) {

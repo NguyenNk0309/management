@@ -12,5 +12,9 @@ public class HardwareRequestDTO {
 
     private Boolean acSwitch2;
 
-    private Boolean acSwitch3;
+    private Boolean userReq;
+
+    private Boolean resetFactoryReq;
+
+    private Boolean rebootReq;
 }

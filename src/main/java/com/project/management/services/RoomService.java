@@ -31,9 +31,9 @@ public class RoomService {
     HardwareRepository hardwareRepository;
 
     public String createNewRoom(String roomName, Long userPk) {
-        Optional<Room> room = roomRepository.findByName(roomName);
-        if (room.isPresent()) {
-            if (!room.get().getIsDeleted()) {
+        Room room = roomRepository.findByRoomName(roomName);
+        if (Objects.nonNull(room)) {
+            if (!room.getIsDeleted()) {
                 throw new MyException(HttpStatus.CONFLICT, "Room Name Already Exist");
             }
         }
@@ -165,9 +165,9 @@ public class RoomService {
             throw new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk));
         }
 
-        Optional<Room> roomExisted = roomRepository.findByName(name);
-        if (roomExisted.isPresent()) {
-            if (!roomExisted.get().getIsDeleted()) {
+        Room roomExisted = roomRepository.findByRoomName(name);
+        if (Objects.nonNull(roomExisted)) {
+            if (!roomExisted.getIsDeleted()) {
                 throw new MyException(HttpStatus.CONFLICT, "Room Name Already Exist");
             }
         }

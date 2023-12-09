@@ -30,21 +30,23 @@ public class RoomService {
     HardwareRepository hardwareRepository;
 
     public String createNewRoom(String roomName, Long userPk) {
-        Boolean isRoomNameExist = roomRepository.existsByName(roomName);
-        if (isRoomNameExist) {
-            throw new MyException(HttpStatus.CONFLICT, "Room Name Already Exist");
+        Optional<Room> room = roomRepository.findByName(roomName);
+        if (room.isPresent()) {
+            if (!room.get().getIsDeleted()) {
+                throw new MyException(HttpStatus.CONFLICT, "Room Name Already Exist");
+            }
         }
 
         User user = userRepository.findById(userPk)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("User With Pk = %d Not Found", userPk)));
 
-        Room room = roomRepository.save(new Room(roomName, user));
-        return room.getRegisterToken();
+        Room newRoom = roomRepository.save(new Room(roomName, user));
+        return newRoom.getRegisterToken();
     }
 
     public List<RoomInfoDTO> getAllRooms() {
         List<Room> rooms = roomRepository.findAll();
-        return rooms.stream().map(room ->
+        return rooms.stream().filter((room -> !room.getIsDeleted())).map(room ->
                 RoomInfoDTO
                         .builder()
                         .pk(room.getPk())
@@ -73,7 +75,7 @@ public class RoomService {
         User user = userRepository.findById(userPk)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("User With Pk = %d Not Found", userPk)));
         List<Room> rooms = roomRepository.findAllByUser(user);
-        return rooms.stream().map(room ->
+        return rooms.stream().filter((room -> !room.getIsDeleted())).map(room ->
                         RoomInfoDTO
                                 .builder()
                                 .pk(room.getPk())
@@ -106,6 +108,10 @@ public class RoomService {
        Room room = roomRepository.findById(pk)
                .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));
 
+        if (room.getIsDeleted()) {
+            throw new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk));
+        }
+
         Hardware hardware = room.getHardware();
         if (Objects.isNull(hardware)) {
             throw new MyException(HttpStatus.NOT_FOUND, "This Room Hasn't Connect To Hardware Yet");
@@ -122,15 +128,34 @@ public class RoomService {
     public void deleteRoomByPk(Long pk) {
         Room room = roomRepository.findById(pk)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));
-        Long hardwareId = room.getHardware().getPk();
-        roomRepository.deleteById(pk);
-        hardwareRepository.deleteById(hardwareId);
-        hardwareRepository.deleteAuditByHardwareId(hardwareId);
+
+        if (room.getIsDeleted()) {
+            throw new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk));
+        }
+
+        if (Objects.nonNull(room.getHardware())) {
+            Long hardwareId = room.getHardware().getPk();
+            hardwareRepository.deleteAuditByHardwareId(hardwareId);
+        }
+        room.setIsDeleted(true);
+        roomRepository.save(room);
     }
 
     public String updateRoomByPk(Long pk, String name) {
         Room room = roomRepository.findById(pk)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));
+
+        if (room.getIsDeleted()) {
+            throw new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk));
+        }
+
+        Optional<Room> roomExisted = roomRepository.findByName(name);
+        if (roomExisted.isPresent()) {
+            if (!roomExisted.get().getIsDeleted()) {
+                throw new MyException(HttpStatus.CONFLICT, "Room Name Already Exist");
+            }
+        }
+
         room.setName(name);
         return roomRepository.save(room).getName();
     }
@@ -138,6 +163,10 @@ public class RoomService {
     public void updateHardwareLimit(Long pk, HardwareLimitDTO requestDTO) {
         Room room = roomRepository.findById(pk)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));
+
+        if (room.getIsDeleted()) {
+            throw new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk));
+        }
 
         Hardware hardware = room.getHardware();
         if (Objects.isNull(hardware)) {
@@ -166,6 +195,10 @@ public class RoomService {
         Room room = roomRepository.findById(pk)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));
 
+        if (room.getIsDeleted()) {
+            throw new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk));
+        }
+
         Hardware hardware = room.getHardware();
         if (Objects.isNull(hardware)) {
             throw new MyException(HttpStatus.NOT_FOUND, "This Room Hasn't Connect To Hardware Yet");
@@ -183,6 +216,10 @@ public class RoomService {
     public List<HardwareLimitDTO> getHardwareLimit(Long pk) {
         Room room = roomRepository.findById(pk)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));
+
+        if (room.getIsDeleted()) {
+            throw new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk));
+        }
 
         Hardware hardware = room.getHardware();
         if (Objects.isNull(hardware)) {

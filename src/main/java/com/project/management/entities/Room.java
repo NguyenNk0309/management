@@ -23,6 +23,8 @@ public class Room extends BaseEntity {
 
     private Boolean isUsed;
 
+    private Boolean isDeleted;
+
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "hardware_fk")
     private Hardware hardware;
@@ -37,5 +39,6 @@ public class Room extends BaseEntity {
         this.registerToken = generateRandomToken(8);
         this.apiToken = generateRandomToken(5);
         this.isUsed = false;
+        this.isDeleted = false;
     }
 }

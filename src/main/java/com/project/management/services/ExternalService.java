@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import utils.ManagerUtil;
 
 import java.util.Date;
@@ -37,6 +36,10 @@ public class ExternalService {
     public String connectHardware(String token) {
         Room room = roomRepository.findByRegisterToken(token)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Token '%s' Not Found", token)));
+        if (room.getIsDeleted()) {
+            throw new MyException(HttpStatus.NOT_FOUND, String.format("Room With Token '%s' Not Found", token));
+        }
+
         Hardware hardware = room.getHardware();
         if (Objects.isNull(hardware)) {
             room.setHardware(new Hardware());
@@ -104,6 +107,10 @@ public class ExternalService {
                                     Boolean rebootReq) {
         Room room = roomRepository.findByApiToken(token)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Token '%s' Not Found", token)));
+
+        if (room.getIsDeleted()) {
+            throw new MyException(HttpStatus.NOT_FOUND, String.format("Room With Token '%s' Not Found", token));
+        }
 
         Boolean isConnected = room.getIsUsed();
         if (!isConnected) {

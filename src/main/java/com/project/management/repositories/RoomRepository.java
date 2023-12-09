@@ -14,6 +14,8 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     Optional<Room> findByApiToken(String token);
 
+    Optional<Room> findByName(String roomName);
+
     Optional<Room> findByRegisterToken(String token);
 
     List<Room> findAllByUser(User user);

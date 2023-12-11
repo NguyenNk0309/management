@@ -137,6 +137,10 @@ public class RoomService {
         hardware.setRebootReq(requestDTO.getRebootReq());
         hardware.setResetFactoryReq(requestDTO.getResetFactoryReq());
 
+        if (requestDTO.getRebootReq()) {
+            hardwareRepository.deleteAuditByHardwareId(hardware.getPk());
+        }
+
         roomRepository.save(room);
     }
 

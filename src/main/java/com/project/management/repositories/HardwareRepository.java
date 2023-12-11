@@ -40,7 +40,8 @@ public interface HardwareRepository extends JpaRepository<Hardware, Long> {
             "JOIN room r ON aud.pk = r.hardware_fk " +
             "JOIN revinfo ri ON ri.rev = aud.rev " +
             "WHERE r.pk = :roomPk " +
-            "AND DATE_FORMAT("+REV_TIME+", '%Y-%m-%d') = DATE_FORMAT(:timeFilter, '%Y-%m-%d') ",
+            "AND DATE_FORMAT("+REV_TIME+", '%Y-%m-%d') = DATE_FORMAT(:timeFilter, '%Y-%m-%d') " +
+            "AND "+REV_TIME+" >= DATE_SUB(NOW(), INTERVAL 1 HOUR) ",
             nativeQuery = true)
     List<AmpereAndVoltageHistoriesDTO> getAmpereAndVoltageHistoriesByRoomPk(Long roomPk, Date timeFilter);
 

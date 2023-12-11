@@ -119,6 +119,7 @@ public class RoomService {
         return historiesDTOS;
     }
 
+    @Transactional
     public void updateHardware(Long pk, HardwareRequestDTO requestDTO) {
        Room room = roomRepository.findById(pk)
                .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk)));

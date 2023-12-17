@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class NotifyDTO {
+    private String sensorId;
     private String title;
     private String description;
 

@@ -99,6 +99,7 @@ public class ExternalService {
                             String.format("/ws/topic/user/%s", user.getPk()),
                             NotifyDTO.builder()
                                     .sensorId(sensorId)
+                                    .roomName(roomName)
                                     .title(String.format("Notification For %s In Room Name: %s", sensorName, roomName))
                                     .description(String.format("The Current Value Of %s (%.2f) Is Higher Than Your Upper Limit Setup (%.2f)", sensorName, value, hardwareLimit.getUpperLimit()))
                                     .build());
@@ -107,6 +108,7 @@ public class ExternalService {
                     .convertAndSend("/ws/topic/role/ADMIN",
                             NotifyDTO.builder()
                                     .sensorId(sensorId)
+                                    .roomName(roomName)
                                     .title(String.format("Notification For %s In Room Name: %s", sensorName, roomName))
                                     .description(String.format("The Current Value Of %s (%.2f) Is Higher Than Your Upper Limit Setup (%.2f)", sensorName, value, hardwareLimit.getUpperLimit()))
                                     .build());
@@ -118,6 +120,7 @@ public class ExternalService {
                             String.format("/ws/topic/user/%s", user.getPk()),
                             NotifyDTO.builder()
                                     .sensorId(sensorId)
+                                    .roomName(roomName)
                                     .title(String.format("Notification For %s In Room Name: %s", sensorName, roomName))
                                     .description(String.format("The Current Value Of %s (%.2f) Is Lower Than Your Lower Limit Setup (%.2f)", sensorName, value, hardwareLimit.getLowerLimit()))
                                     .build());
@@ -126,6 +129,7 @@ public class ExternalService {
                     .convertAndSend("/ws/topic/role/ADMIN",
                             NotifyDTO.builder()
                                     .sensorId(sensorId)
+                                    .roomName(roomName)
                                     .title(String.format("Notification For %s In Room Name: %s", sensorName, roomName))
                                     .description(String.format("The Current Value Of %s (%.2f) Is Lower Than Your Lower Limit Setup (%.2f)", sensorName, value, hardwareLimit.getLowerLimit()))
                                     .build());

@@ -10,5 +10,6 @@ public class NotifyDTO {
     private String sensorId;
     private String title;
     private String description;
+    private String roomName;
 
 }

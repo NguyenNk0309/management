@@ -16,7 +16,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     Optional<Room> findByApiToken(String token);
 
     @Query(value = "SELECT r FROM Room r WHERE r.name = :roomName")
-    Room findByRoomName(String roomName);
+    List<Room> findByRoomName(String roomName);
 
     Optional<Room> findByRegisterToken(String token);
 

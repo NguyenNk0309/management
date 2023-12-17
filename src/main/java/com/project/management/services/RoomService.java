@@ -31,12 +31,12 @@ public class RoomService {
     HardwareRepository hardwareRepository;
 
     public String createNewRoom(String roomName, Long userPk) {
-        Room room = roomRepository.findByRoomName(roomName);
-        if (Objects.nonNull(room)) {
+        List<Room> rooms = roomRepository.findByRoomName(roomName);
+        rooms.forEach(room -> {
             if (!room.getIsDeleted()) {
                 throw new MyException(HttpStatus.CONFLICT, "Room Name Already Exist");
             }
-        }
+        });
 
         User user = userRepository.findById(userPk)
                 .orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, String.format("User With Pk = %d Not Found", userPk)));
@@ -170,12 +170,12 @@ public class RoomService {
             throw new MyException(HttpStatus.NOT_FOUND, String.format("Room With Pk '%d' Not Found", pk));
         }
 
-        Room roomExisted = roomRepository.findByRoomName(name);
-        if (Objects.nonNull(roomExisted)) {
+        List<Room> roomsExisted = roomRepository.findByRoomName(name);
+        roomsExisted.forEach(roomExisted -> {
             if (!roomExisted.getIsDeleted()) {
                 throw new MyException(HttpStatus.CONFLICT, "Room Name Already Exist");
             }
-        }
+        });
 
         room.setName(name);
         return roomRepository.save(room).getName();

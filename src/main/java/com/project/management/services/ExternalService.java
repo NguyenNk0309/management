@@ -17,6 +17,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import utils.ManagerUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
@@ -63,6 +64,7 @@ public class ExternalService {
                             .rebootReq(false)
                             .totalPowerConsumption(0F)
                             .totalWaterConsumption(0F)
+                            .limitList(new ArrayList<>())
                             .build());
         }
         room.setIsUsed(true);

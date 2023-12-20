@@ -264,7 +264,7 @@ public class ExternalService {
             throw new MyException(HttpStatus.LOCKED, String.format("Room With Token '%s' Isn't Connected", token));
         }
 
-        return HardwareRequestDTO
+        HardwareRequestDTO requestDTO = HardwareRequestDTO
                 .builder()
                 .acSwitch1(room.getHardware().getAcSwitch1())
                 .acSwitch2(room.getHardware().getAcSwitch2())
@@ -272,5 +272,12 @@ public class ExternalService {
                 .resetFactoryReq(room.getHardware().getResetFactoryReq())
                 .rebootReq(room.getHardware().getRebootReq())
                 .build();
+
+        Hardware hardware = room.getHardware();
+        hardware.setResetFactoryReq(false);
+        hardware.setRebootReq(false);
+        hardwareRepository.save(hardware);
+
+        return requestDTO;
     }
 }

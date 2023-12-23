@@ -169,10 +169,15 @@ public class ExternalService {
             throw new MyException(HttpStatus.LOCKED, String.format("Room With Token '%s' Isn't Connected", token));
         }
 
+        if (ampereSensorValue > 0.1) {
+            ampereSensorValue += 0.05F;
+        }
+        Float ampereSensorValueFix = ampereSensorValue;
+
         Hardware hardware = room.getHardware();
         hardware.setGasSensorValue(gasSensorValue);
         hardware.setVoltageSensorValue(voltageSensorValue);
-        hardware.setAmpereSensorValue(ampereSensorValue);
+        hardware.setAmpereSensorValue(ampereSensorValueFix);
         hardware.setTemperatureSensorValue(temperatureSensorValue);
         hardware.setHumiditySensorValue(humiditySensorValue);
         hardware.setWaterSensorValue(waterSensorValue);
@@ -198,7 +203,7 @@ public class ExternalService {
                     checkLimit(hardwareLimit, room.getUser(), voltageSensorValue, "V1", room.getName());
                     break;
                 case "V2":
-                    checkLimit(hardwareLimit, room.getUser(), ampereSensorValue, "V2", room.getName());
+                    checkLimit(hardwareLimit, room.getUser(), ampereSensorValueFix, "V2", room.getName());
                     break;
                 case "V3":
                     checkLimit(hardwareLimit, room.getUser(), temperatureSensorValue, "V3", room.getName());

@@ -16,7 +16,7 @@ public interface HardwareRepository extends JpaRepository<Hardware, Long> {
     String REV_TIME = "from_unixtime(ri.revtstmp/1000)";
 
     @Query(value = "SELECT " +
-            "CASE WHEN :timeType = 'day' THEN HOUR("+REV_TIME+") + 7 " +
+            "CASE WHEN :timeType = 'day' THEN HOUR("+REV_TIME+") " +
             "WHEN :timeType = 'month' THEN DAYOFMONTH("+REV_TIME+") " +
             "WHEN :timeType = 'year' THEN MONTH("+REV_TIME+") " +
             "END AS time," +
